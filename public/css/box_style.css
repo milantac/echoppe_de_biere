@@ -1,0 +1,49 @@
+.alert-info {
+    border: blue 5px solid !important;
+    color: blue !important;
+}
+
+.alert-warning {
+    border: orangered 5px solid !important;
+    color: orangered !important;
+}
+
+.alert-success {
+    border: green 5px solid !important;
+    color: green !important;
+}
+
+.alert-danger {
+    border: red 5px solid !important;
+    color: red !important;
+}
+
+.cadre_noir {
+    border-image-slice:
+        115 44 120 51;
+    border-image-width:
+        2.23rem 1.12rem 2.23rem 1.12rem;
+    border-image-outset:
+        1.45rem 0rem 1.45rem 0rem;
+    border-image-repeat:
+        stretch stretch;
+    border-image-source:
+        url("../images/border/cadre_noir.png");
+    border-style:
+        solid;
+}
+
+.cadre_bois {
+    border-image-slice:
+        299 357 342 299;
+    border-image-width:
+        20px 20px 20px 20px;
+    border-image-outset:
+        0px 0px 0px 0px;
+    border-image-repeat:
+        stretch stretch;
+    border-image-source:
+        url("../images/border/89746.png");
+    border-style:
+        solid;
+}

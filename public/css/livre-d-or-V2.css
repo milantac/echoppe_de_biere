@@ -1,0 +1,130 @@
+/* Book settings */
+.book {
+  position: relative;
+  perspective: 1000px;
+  width: 100%;
+  height: 500px;
+  margin: 0 auto;
+}
+
+.hardcover_front, .hardcover_back, .book_spine, .page {
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.hardcover_front, .hardcover_back {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hardcover_front {
+  transform: rotateY(-34deg) translateY(-50%) translateZ(100px);
+  transform-origin: 0% 100%;
+}
+
+.hardcover_back {
+  transform: rotateY(34deg) translateY(-50%) translateZ(100px);
+  transform-origin: 100% 100%;
+}
+
+.book_spine {
+  width: 10px;
+  height: 100%;
+  background-color: #333;
+  transform: translateY(-50%) translateX(-5px) translateZ(90px);
+}
+
+.page {
+  width: 98%;
+  height: 98%;
+  padding: 10px;
+  overflow-y: scroll;
+}
+
+/* Front cover design */
+.coverDesign {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.coverDesign.dark {
+  background-color: #333;
+  color: #fff;
+}
+
+.coverDesign img {
+  max-width: 80%;
+}
+
+.coverDesign h1 {
+  font-size: 2.5em;
+  margin: 1em 0;
+}
+
+/* Back cover design */
+.moyennes-notes {
+  padding: 15px;
+  font-size: 14px;
+}
+
+/* Button settings */
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+::before, ::after { content: ""; }
+.align { 
+  clear: both; 
+  text-align: center; 
+}
+.align > li { width: 8rem; min-height: 30rem; display: inline-block; }
+#scale{
+scale: 0.7;
+}
+#livre-d-or { list-style-type: none; }
+.book { 
+  position: relative; 
+  margin: 10rem 0; 
+  width: 30rem;  height: 35rem; 
+  perspective: 56rem; 
+  transform-style: preserve-3d; 
+}
+.hardcover_front div:first-child { background-color: #eee; backface-visibility: hidden; }
+.hardcover_front div:last-child { background: #fffbec; }
+.hardcover_back div:first-child { background: #fffbec; }
+.hardcover_back div:last-child { background: #fffbec; }
+.book_spine div:first-child { background: rgb(125, 125, 125); }
+.book_spine div:last-child { background: #333; }
+.hardcover_front div:first-child:after, .hardcover_front div:first-child:before, .hardcover_front div:last-child:after, .hardcover_front div:last-child:before, .hardcover_back div:first-child:after, .hardcover_back div:first-child:before, .hardcover_back div:last-child:after, .hardcover_back div:last-child:before, .book_spine div:first-child:after, .book_spine div:first-child:before, .book_spine div:last-child:after, .book_spine div:last-child:before {background: #999;}
+.page > div {background: linear-gradient(left, #e1ddd8 0%, #fffbf6 100%);box-shadow: inset 0px -1px 2px rgba(50, 50, 50, 0.1), inset -1px 0px 1px rgba(150, 150, 150, 0.2);border-radius: 0px 5px 5px 0px;}
+.hardcover_front {transform: rotateY(-34deg) translateZ(8px);z-index: 100;}
+.hardcover_back { transform: rotateY(-15deg) translateZ(-8px); }
+.page div:nth-child(1) { transform: rotateY(-28deg); }
+.page div:nth-child(2) { transform: rotateY(-30deg); }
+.page div:nth-child(3) { transform: rotateY(-32deg); }
+.page div:nth-child(4) { transform: rotateY(-34deg); }
+.page div:nth-child(5) { transform: rotateY(-36deg); }
+.hardcover_front, .hardcover_back, .book_spine, .hardcover_front div, .hardcover_back div, .book_spine div {position: absolute;top: 0;left: 0;width: 100%;height: 100%;transform-style: preserve-3d;}
+.hardcover_front,
+.hardcover_back {transform-origin: 0% 100%;}
+.hardcover_front {transition: all 0.8s ease, z-index 0.6s;}
+.hardcover_front div:first-child {cursor: default;user-select: none;transform: translateZ(2px);}
+.hardcover_front div:last-child {transform: rotateY(180deg) translateZ(2px);}
+.hardcover_back div:first-child {transform: translateZ(2px);}
+.hardcover_back div:last-child { transform: rotateY(180deg) translateZ(2px); }
+.book_spine div:first-child { transform: rotateY(90deg) translateZ(15px); }
+.book_spine div:last-child { transform: rotateY(-90deg) translateZ(15px); }
+.page { position: absolute; width: 100%; height: 100%; }
+.page > div { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.page div:nth-child(odd) { transform-origin: 0% 100%; }
+.page div:nth-child(even) { transform-origin: 100% 100%; }
+.page div:nth-child(1) { z-index: 6; }
+.page div:nth-child(2) { z-index: 5; }
+.page div:nth-child(3) { z-index: 4; }
+.page div:nth-child(4) { z-index: 3; }
+.page div:nth-child(5) { z-index: 2; }

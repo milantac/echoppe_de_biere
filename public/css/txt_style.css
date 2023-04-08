@@ -1,0 +1,80 @@
+/******************************************************************
+ *                       Alignement du texte                      * 
+ ******************************************************************/
+ .txt-Start     {   text-align:  start;     }   /*  Gauche  */
+ .txt-Center    {   text-align: center;     }   /*  Centrer */
+ .txt-End       {   text-align:    end;     }   /*  Droite  */
+/******************************************************************
+ *                      Coloration du texte                       *
+ ******************************************************************/
+.txt-Noir       {   color: rgb(  0,   0,   0);  }
+.txt-Blanc      {   color: rgb(255, 255, 255);  }
+.txt-Rouge      {   color: rgb(255,   0,   0);  }
+.txt-vert       {   color: rgb(  0, 255,   0);  }
+.txt-Bleu       {   color: rgb(  0,   0, 255);  }
+.txt-Orange     {   color: rgb(255,  72,   0);  }
+.txt-Jaune      {   color: rgb(255, 255,   0);  }
+.txt-Gris       {   color: rgb(128, 128, 128);  }
+/** ** ** ** ** **   Nance de vert...   ** ** ** ** ** **/
+.txt-Aubergine  {   color: rgb( 57,   0,  47);  }
+.txt-Vin        {   color: rgb( 34,   6,  34);  }
+.txt-Plump      {   color: rgb(100,  19,  50);  }
+.txt-Bordeaux   {   color: rgb(106,   7,  25);  }
+.txt-Raisin     {   color: rgb(115,  45,  69);  }
+.txt-Grenat     {   color: rgb(111,  15,  18);  }
+.txt-Denin      {   color: rgb( 56,   0, 102);  }
+.txt-Violet     {   color: rgb(133,   0, 153);  }
+.txt-Mauve      {   color: rgb(138,  71, 140);  }
+.txt-Pourpre    {   color: rgb(189,  39, 198);  }
+.txt-Anethyste  {   color: rgb(196, 105, 244);  }
+.txt-Bruyere    {   color: rgb(168, 124, 185);  }
+.txt-Iris       {   color: rgb(169, 101, 200);  }
+.txt-Lilas      {   color: rgb(204,  96, 208);  }
+.txt-Lavande    {   color: rgb(230, 230, 230);  }
+.txt-Pervenche  {   color: rgb(249, 158, 251);  }
+.txt-QuartzRose {   color: rgb(245, 193, 192);  }
+.txt-Grenadine  {   color: rgb(232, 118, 115);  }
+.txt-Saumon     {   color: rgb(239, 105,  77);  }
+.txt-Corail     {   color: rgb(192,  61,  34);  }
+.txt-Fraise     {   color: rgb(194,  47,  66);  }
+.txt-Framboise  {   color: rgb(150,  82,  87);  }
+/** ** ** ** ** **   Nance de vert   ** ** ** ** ** **/
+.txt-Thym       {   color: rgb(160, 190, 162);  }
+.txt-Pistache   {   color: rgb(206, 232, 185);  }
+.txt-Laurier    {   color: rgb( 67, 112,  57);  }
+.txt-Basilic    {   color: rgb( 79, 120,  22);  }
+.txt-Celeri     {   color: rgb(242, 248, 213);  }
+.txt-Bouteille  {   color: rgb( 30,  58,  10);  }
+.txt-Gazon      {   color: rgb( 26,  110,  2);  }
+.txt-Pomme      {   color: rgb(160, 204,   0);  }
+.txt-Avocat     {   color: rgb( 77, 109,  11);  }
+.txt-Olive      {   color: rgb(142, 152,  15);  }
+.txt-Artichaud  {   color: rgb(111, 109,  28);  }
+.txt-Menthe     {   color: rgb(108, 195,  91);  }
+.txt-Algue      {   color: rgb( 33,  47,  14);  }
+
+.txt-echoppe    {   color: rgb( 255,  244,  212);  }
+#aProposDeNous p::first-letter
+{   
+    color:rgb(0, 0, 0);
+    font-size: x-large;
+    font-weight: bold;
+}
+.table-echoppe{
+    color: rgb( 255,  244,  212);
+    text-shadow: 
+        rgb(255, 255, 255) 0px 0px 5px,
+        rgb(255, 255, 255) 0px 0px 10px, 
+        rgb(255, 255, 255) 0px 0px 15px, 
+        rgba(255, 217, 0, 0.729) 0px 0px 20px, 
+        rgba(255, 217, 0, 0.729) 0px 0px 30px, 
+        rgba(255, 217, 0, 0.729) 0px 0px 40px, 
+        rgba(255, 217, 0, 0.729) 0px 0px 50px, 
+        rgba(255, 217, 0, 0.729) 0px 0px 75px;
+}
+.partie1 {
+    background: center / cover url(../images/fond/or.jpg);
+    background-clip: texte;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

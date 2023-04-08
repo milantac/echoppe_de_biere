@@ -1,0 +1,265 @@
+:root{
+    /*police */
+    --font:Verdana;
+    --select_font_size:20px;
+
+    /* tailles */
+    --select_width: 348px;
+    --select_height: 30px;
+    --section_listes:698px;
+
+    /*couleurs utililsée */
+    /* Listes mois et année */
+    --select_bg_color: lightgray;
+    --select_color: #ffffff;
+    --select_boder: deeppink;
+
+    /*Tableau */
+    --table_border:deeppink;
+
+    --thead_bg_color : skyblue;
+    --thead_border_color:deeppink;
+    --thead_color:whitesmoke;
+    
+    --td_border_color : deeppink;
+    --td_bg_color:whitesmoke;
+
+    /*case non disonible (déjà réservée)*/
+    --unavailable_bg_color:deeppink;
+
+    /*jour qui ne font pas partie du mois (si on commence le mois par un merdcredi,
+    lundi et mardi auront cette couleur. Si on fini le mois par un vendredi, 
+    samedi et dimance auront cette couleur*/
+    --desactive_color: lavender;
+     
+    /*Samedi et dimanche quand on veut empecher la saisie sur ces jours*/
+    --desactive_WE_color:darkgrey;
+
+    /*Jour férié quand on veut empecher la saisie sur ces jours*/
+    --desactive_F_color :deeppink;
+
+    /*Jours antérieurs à la date du jour (pour ne pas saisir des dates déjà passées*/
+    --desactive_ant_color:lightgray;
+
+    /*Cases actives*/
+    --active_bg_color:whitesmoke;
+    --activeF_bg_color:whitesmoke;
+    --activeF_color:deeppink;
+    --activeW_bg_color:whitesmoke;
+    --activeW_color:skyblue;
+
+    /*RESERVATION*/
+    /*Bouton de validation*/
+    --submit_border:deeppink;
+    --submit_bg_color:lightgray;;
+    --submit_color:#ffffff;
+
+    /*Message d'information après validation*/
+    --info_color:skyblue;
+
+    /*EVENEMENTS */
+    --vide_color:darkgrey;
+
+    --activeE_bg_color:whitesmoke;
+    --activeE_color:cadetblue;
+
+    --dateEvt_color:cadetblue;
+
+    /*RENDEZ-VOUS*/
+    --daterdv_color:cadetblue;
+}
+
+.myContainer{
+   display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.listes{
+    display: flex;
+    justify-content: space-between;
+    width: var(--section_listes);
+    margin: auto;
+}
+
+.liste {
+    width: var(--select_width);
+    height: var(--select_height);
+    margin-bottom: 3px;
+    margin-top: 30px;
+    background-color:var(--select_bg_color);
+    color:var(--select_color);
+    border: 1px solid var(--select_boder);
+    font-size: var(--select_font_size);
+    
+}
+
+
+.tableau {
+    margin-top: 0px;
+    border: 1px solid var(--table_border);
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    width: 700px;
+    height: 300px;
+    text-align: left;
+    cursor: default;
+}
+
+.tableau th {
+    font-family: var(--font);
+    border: thin solid var(--thead_border_color);
+    padding: 2px;
+    background-color: var(--thead_bg_color);
+    color: var(--thead_color);
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.tableau td {
+    font-family: var(--font);
+    border: 1px solid var(--td_border_color);
+    padding: 10px;
+    font-weight: bold;    
+    background-color: var(--td_bg_color);
+}
+
+.unavailable {
+    background-color: var(--unavailable_bg_color)  !important;
+}
+
+.desactive {
+    background-color: var(--desactive_color) !important;    
+}
+
+.desactive_WE{
+color: var(--desactive_WE_color) !important;  
+}
+
+.desactive_F{
+    color:  var(--desactive_F_color) !important;;
+}
+.desactive_ant{
+    color: var(--desactive_ant_color);
+    padding-left: 15px !important;
+}
+.descative_vide{
+    color: var(--vide_color);
+}
+.bt_Active{
+    border: none;
+    background-color: var(--active_bg_color);
+    font-family: var(--font);
+    font-weight: bold;
+    font-size: 15px;
+}
+.bt_Active:hover{
+   cursor: pointer;
+}
+
+.bt_Active_F{
+    border: none;
+    background-color: var(--activeF_bg_color);
+    color: var(--activeF_color);
+    font-family: var(--font);
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.bt_Active_F:hover{
+    cursor: pointer;
+}
+
+
+.bt_Active_W{
+    border: none;
+    background-color: var(--activeW_bg_color);
+    color:var(--activeW_color);
+    font-family: var(--font);
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.bt_Active_W:hover{
+    cursor: pointer;
+}
+
+.bt_Active_E{
+    border: none;
+    background-color: var(--activeE_bg_color);
+    font-family: var(--font);
+    color:var(--activeE_color);
+    font-weight: bold;
+    font-size: 15px;
+}
+.bt_Active_E:hover{
+   cursor: pointer;
+}
+.thedates{
+    display: flex;
+    width: 698px;
+    margin: auto;
+    justify-content: center;
+}
+
+.info{
+    width: 698px;
+    margin: auto;
+    text-align: center;
+    color: var(--info_color);
+    font-family: var(--font);
+}
+
+#bt_info{
+    display: none;
+}
+
+.thedates input{
+    margin: 10px;
+}
+
+.bt_submit{
+    border: 1px solid var(--submit_border);
+    font-size: 20px;
+    background-color: var(--submit_bg_color);
+    color: var(--submit_color)
+}
+
+.bt_submit:hover{
+    cursor: pointer;
+}
+
+.date_evt{
+    color: var(--dateEvt_color);
+}
+
+.evenement{
+    width: 698px;
+    margin: auto;
+    font-family: var(--font);
+}
+
+.date_rdv{
+    color: var(--daterdv_color);
+}
+.rdv{
+
+    width: 698px;
+    margin: auto;
+    font-family: var(--font);
+    display: flex;
+    justify-content: center;
+}
+
+#rdv{
+    display: flex;
+}
+
+#btvalRdv{
+    display: none;
+}
+
+.rdv p, select, input{
+    margin: 10px;
+}

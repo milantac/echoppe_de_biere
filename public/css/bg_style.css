@@ -1,0 +1,83 @@
+/******************************************************************
+ *                    Coloration du Background                    *
+ ******************************************************************/
+.bg-Noir        {   background-color: rgb(  0,   0,   0);   }
+.bg-Blanc       {   background-color: rgb(255, 255, 255);   }
+.bg-Rouge       {   background-color: rgb(255,   0,   0);   }
+.bg-vert        {   background-color: rgb(  0, 255,   0);   }
+.bg-Bleu        {   background-color: rgb(  0,   0, 255);   }
+.bg-Orange      {   background-color: rgb(255,  72,   0);   }
+.bg-Jaune       {   background-color: rgb(255, 255,   0);   }
+.bg-Gris        {   background-color: rgb(128, 128, 128);   }
+/** ** ** ** ** **   Nance de vert...   ** ** ** ** ** **/
+.bg-Aubergine   {   background-color: rgb( 57,   0,  47);   }
+.bg-Vin         {   background-color: rgb( 34,   6,  34);   }
+.bg-Plump       {   background-color: rgb(100,  19,  50);   }
+.bg-Bordeaux    {   background-color: rgb(106,   7,  25);   }
+.bg-Raisin      {   background-color: rgb(115,  45,  69);   }
+.bg-Grenat      {   background-color: rgb(111,  15,  18);   }
+.bg-Denin       {   background-color: rgb( 56,   0, 102);   }
+.bg-Violet      {   background-color: rgb(133,   0, 153);   }
+.bg-Mauve       {   background-color: rgb(138,  71, 140);   }
+.bg-Pourpre     {   background-color: rgb(189,  39, 198);   }
+.bg-Anethyste   {   background-color: rgb(196, 105, 244);   }
+.bg-Bruyere     {   background-color: rgb(168, 124, 185);   }
+.bg-Iris        {   background-color: rgb(169, 101, 200);   }
+.bg-Lilas       {   background-color: rgb(204,  96, 208);   }
+.bg-Lavande     {   background-color: rgb(230, 230, 230);   }
+.bg-Pervenche   {   background-color: rgb(249, 158, 251);   }
+.bg-QuartzRose  {   background-color: rgb(245, 193, 192);   }
+.bg-Grenadine   {   background-color: rgb(232, 118, 115);   }
+.bg-Saumon      {   background-color: rgb(239, 105,  77);   }
+.bg-Corail      {   background-color: rgb(192,  61,  34);   }
+.bg-Fraise      {   background-color: rgb(194,  47,  66);   }
+.bg-Framboise   {   background-color: rgb(150,  82,  87);   }
+/** ** ** ** ** **   Nance de vert   ** ** ** ** ** **/
+.bg-Thym        {   background-color: rgb(160, 190, 162);   }
+.bg-Pistache    {   background-color: rgb(206, 232, 185);   }
+.bg-Laurier     {   background-color: rgb( 67, 112,  57);   }
+.bg-Basilic     {   background-color: rgb( 79, 120,  22);   }
+.bg-Celeri      {   background-color: rgb(242, 248, 213);   }
+.bg-Bouteille   {   background-color: rgb( 30,  58,  10);   }
+.bg-Gazon       {   background-color: rgb( 26, 110,   2);   }
+.bg-Pomme       {   background-color: rgb(160, 204,   0);   }
+.bg-Avocat      {   background-color: rgb( 77, 109,  11);   }
+.bg-Olive       {   background-color: rgb(142, 152,  15);   }
+.bg-Artichaud   {   background-color: rgb(111, 109,  28);   }
+.bg-Menthe      {   background-color: rgb(108, 195,  91);   }
+.bg-Algue       {   background-color: rgb( 33,  47,  14);   }
+.bg-echoppe     {   background-color: rgb(255, 244, 212);   }
+
+.bg-biere {
+    position: relative;
+    background-image: 
+        url('../images/fond/fond-flottant-bulles1.png'), 
+        -moz-linear-gradient( 180deg, rgba(255,255,255,1) 0%, 
+            rgba(255,255,255,1) 9%, rgba(180,95,20,1) 13%, 
+            rgba(187,98,23,1) 27%, rgba(255,154,37,1) 46%, 
+            rgba(255,193,7,1) 100%
+        );
+    background-image:  
+        url('../images/fond/fond-flottant-bulles1.png'), 
+        -webkit-linear-gradient(
+            180deg, rgba(255,255,255,1) 0%, 
+            rgba(255,255,255,1) 9%, 
+            rgba(180,95,20,1) 13%, 
+            rgba(187,98,23,1) 27%, 
+            rgba(255,154,37,1) 46%, 
+            rgba(255,193,7,1) 100%
+        );
+    background-image:  
+        url('../images/fond/fond-flottant-bulles1.png'),
+        linear-gradient(
+            180deg, rgba(255,255,255,1) 0%, 
+            rgba(255,255,255,1) 9%, 
+            rgba(180,95,20,1) 13%, 
+            rgba(187,98,23,1) 27%, 
+            rgba(255,154,37,1) 46%, 
+            rgba(255,193,7,1) 100%
+        );
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
