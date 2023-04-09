@@ -24,16 +24,19 @@ exit();
 }
  */
 if ($DEBUG) {
- //   print_r($_GET);
+  //  print_r($_GET);
 //    print_r($_SERVER);
 }
 
 $valuesInPath = explode('/', $_GET['_path']);
+if(isset($valuesInPath[1])){
+     $id=$valuesInPath[1];
+}
 $header = getallheaders();
 include_once './db.php';
 switch ($valuesInPath[0]) {
-    case 'produits':
-        include 'api-produits.php';
+    case 'biere':
+        include 'api-biere.php';
         break;  
         case 'livre_d_or':
         include 'api-livre_d_or.php';
@@ -42,7 +45,8 @@ switch ($valuesInPath[0]) {
         include 'api-type_de_biere.php';
         break;
     default:
-
         include 'main-page.php';
         exit();
 }
+
+
