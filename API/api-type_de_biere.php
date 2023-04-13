@@ -9,4 +9,4 @@ if (!isset($id)) {
     $stmt->bindParam(':id', $id);
 }
 include_once 'generic-sql-to-json.php';
-executeAndConvertJSON($stmt);
+OLDexecuteAndConvertJSON($stmt);

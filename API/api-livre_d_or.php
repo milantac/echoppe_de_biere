@@ -10,4 +10,4 @@ if (!isset($valuesInPath[1]) || $valuesInPath[1] == "") {
     $stmt->bindParam(1, $id);
 }
 include_once 'generic-sql-to-json.php';
-executeAndConvertJSON($stmt);
+OLDexecuteAndConvertJSON($stmt);
