@@ -97,7 +97,7 @@ $valueReturned = executeAndConvertJSON($stmt, $method, $id);
 
 if ($method == 'POST' || $method == 'PUT' || $method == 'PATCH') {
     getStandalone($valueReturned);
-    print_r('get last id');
+    //print_r('get last id');
     if ($method == 'POST') {
         header('HTTP/1.1 201 Created');
         exit();
