@@ -3,11 +3,16 @@
 {
 return true;
 }*/
+$DEBUG = true;
+if ($DEBUG) {
+    //  print_r($_GET);
+    //  print_r($_SERVER);
+  }
 if (!isset($_GET["_path"]) || $_GET["_path"] == "") {
     include "./main-page.php";
     exit();
 }
-$DEBUG = true;
+
 $header = getallheaders();
 //verif de l'existance d'une api key si pas en mode debug
 if ($DEBUG == false && (!isset($header['API-TOKEN']))) {
@@ -23,10 +28,7 @@ header('HTTP/1.1 401 Unauthorized');
 exit();
 }
  */
-if ($DEBUG) {
-  //  print_r($_GET);
-//    print_r($_SERVER);
-}
+
 
 $valuesInPath = explode('/', $_GET['_path']);
 if(isset($valuesInPath[1])){
