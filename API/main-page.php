@@ -29,12 +29,16 @@ liste des end-points
         <a href="<?=$basePath?>/type_de_biere">/type_de_biere</a>
         <ul>
             <li>GET</li>
+            <li>POST</li>
         </ul>
     </li>
     <li>
         <a href="<?=$basePath?>/type_de_biere/1">/type_de_biere/${id}</a>
         <ul>
             <li>GET</li>
+            <li>PUT</li>
+            <li>PATCH</li>
+            <li>DELETE</li>
         </ul>
         <br/>
         <br/>
