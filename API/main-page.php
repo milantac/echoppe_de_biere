@@ -44,13 +44,19 @@ liste des end-points
         <a href="<?=$basePath?>/livre_d_or">/livre_d_or</a>
         <ul>
             <li>GET</li>
+            <li>POST</li>
         </ul>
     </li>
     <li>    
         <a href="<?=$basePath?>/livre_d_or/1">/livre_d_or/${id}</a>
         <ul>
             <li>GET</li>
+            <li>PUT</li>
+            <li>PATCH</li>
+            <li>DELETE</li>
         </ul>
+        <br/>
+        <br/>
     </li>
 </ul>
  
