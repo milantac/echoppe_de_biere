@@ -15,7 +15,7 @@ function getStandaloneLivreDOr($id, $onlyKnoIfExist = false)
         //print_r($res);
 
         if (isset($res[0])) {
-            return $res[0];
+            return $res;
         } 
         else {
             return false;
@@ -58,9 +58,9 @@ if ($method == 'PUT' || $method == 'PATCH' || $method == 'POST') {
     }
 }
 switch ($_SERVER['REQUEST_METHOD']) {
-    case 'POST': //echo
+    case 'POST':
         $basereq .= "INSERT INTO `livre_d_or`( `nom`, `prenom`, `email`, `telephone`, `note_accueil_services`, `note_proprete`, `note_qualite_produit`, `commentaire`, `validation_livre_d_or`) VALUES ( '"
-        .str_replace("'", '\\\'', $postin->nom)."', " 
+        .str_replace("'", '\\\'', $postin->nom)."', '" 
         .str_replace("'", '\\\'', $postin->prenom)."', '"
         .$postin->email."', '"
         .$postin->telephone."', "
@@ -70,13 +70,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
         .str_replace("'", '\\\'', $postin->commentaire)."', "
         .$postin->validation_livre_d_or.");";
         break;
-    case 'PUT': //echo
+    case 'PUT':
         $basereq .= "UPDATE `livre_d_or` SET `nom`='"
         .str_replace("'", '\\\'', $postin->nom)."',`prenom`='"
         .str_replace("'", '\\\'', $postin->prenom)."',`email`= '"
         .str_replace("'", '\\\'', $postin->email)."', `telephone`='"
-        .$postin->telephone."', `note_accueil_service`='"
-        .$postin->note_accueil_service."', `not_proprete`='"
+        .$postin->telephone."', `note_accueil_services`='"
+        .$postin->note_accueil_services."', `note_proprete`='"
         .$postin->note_proprete."', `note_qualite_produit`='"
         .$postin->note_qualite_produit."', `commentaire`='"
         .$postin->commentaire."', `validation_livre_d_or`='"
@@ -106,6 +106,7 @@ $deleteRes = null;
 //recuperation pour renvoie de l'objet supprimé
 if ($method == 'DELETE') {
    $deleteRes=getStandaloneLivreDOr($id,true);
+   
 }
 
 $stmt = $pdo->prepare($basereq);
