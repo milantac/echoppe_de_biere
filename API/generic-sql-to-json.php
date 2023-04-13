@@ -1,15 +1,45 @@
 <?php
-include_once "db.php";
-function executeAndConvertJSON($preparedStatement)
+require_once "db.php";
+$GLOBALS['pdo']=$pdo;
+function OLDexecuteAndConvertJSON(PDOStatement $preparedStatement)
 {
-    $preparedStatement->execute();
+    try {
+        $preparedStatement->execute();
+        print_r( //$preparedStatement);
+            $preparedStatement->errorInfo());
+    } catch (Exception $ex) {print_r($ex);}
     $res = $preparedStatement->fetchAll();
     $isArray = false;
-    $paths=explode('/', $_GET['_path']);
+    $paths = explode('/', $_GET['_path']);
     if (!isset($paths[1])) {
         $isArray = true;}
     autoConvertExecutedStatementJsonOutput($res, $isArray);
     header('HTTP/1.1 200 Ok');
+}
+function executeAndConvertJSON(PDOStatement $preparedStatement, $method, $id=-1)
+{
+    try {
+        $preparedStatement->execute();
+    } catch (Exception $ex) {
+        header('HTTP/1.1 500 Internal Server Error');
+        print_r($ex);
+        exit();
+    
+    }
+    if ($method == 'POST') {
+        return $GLOBALS['pdo']->lastInsertId();
+    } else if ($method != 'GET') {
+        return $id;
+    } else {
+        $res = $preparedStatement->fetchAll();
+        $isArray = false;
+        //sortie en tableau ou en objet si ID present dans le path
+        $paths = explode('/', $_GET['_path']);
+        if (!isset($paths[1])) {
+            $isArray = true;}
+        autoConvertExecutedStatementJsonOutput($res, $isArray);
+       // header('HTTP/1.1 200 Ok');
+    }
 }
 function autoConvertExecutedStatementJsonOutput($result, $isArray)
 {
@@ -54,5 +84,15 @@ function autoConvertExecutedStatementJsonOutput($result, $isArray)
         header('HTTP/1.1 500 internal server error');
         exit();
     }
-    header('HTTP/1.1 200 Ok');
+   // header('HTTP/1.1 200 Ok');
+}
+function getKeyList(Object $obj)
+{
+    return get_object_vars($obj);
+}
+function obj2array(&$Instance)
+{
+    $clone = (array) $Instance;
+
+    return $clone;
 }
