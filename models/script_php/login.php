@@ -10,18 +10,18 @@ if (isset($_POST['mail'], $_POST['mdp'])) {
 
     if (!empty($mail) && !empty($mdp)) {
         // Requête pour récupérer l'utilisateur correspondant à l'e-mail entré
-        $sql = "SELECT * FROM utilisateur WHERE mail_utilisateur = ?";
+        $sql = "SELECT * FROM users WHERE login = ?";
         $stmt = $bdd->prepare($sql);
         $stmt->execute(array($mail));
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) { // Vérification que l'utilisateur existe
-            if (password_verify($mdp, $user['mdp_utilisateur'])) { // Vérification du mot de passe
+            if (password_verify($mdp, $user['mdp'])) { // Vérification du mot de passe
                 $_SESSION['connecter'] = 1;
-                $_SESSION['id_utilisateur'] = $user['id_utilisateur']; // Enregistrement de l'ID de l'utilisateur en variable de session
-                $_SESSION['nom_utilisateur'] = $user['nom_utilisateur']; // Enregistrement du nom de l'utilisateur en variable de session
-                $_SESSION['prenom_utilisateur'] = $user['prenom_utilisateur']; // Enregistrement du prénom de l'utilisateur en variable de session
-                $_SESSION['type_utilisateur'] = $user['type_utilisateur']; // Enregistrement du type d'utilisateur en variable de session
+                $_SESSION['id_utilisateur'] = $user['id']; // Enregistrement de l'ID de l'utilisateur en variable de session
+                $_SESSION['nom_utilisateur'] = $user['nom']; // Enregistrement du nom de l'utilisateur en variable de session
+                $_SESSION['prenom_utilisateur'] = $user['prenom']; // Enregistrement du prénom de l'utilisateur en variable de session
+                $_SESSION['type_utilisateur'] = $user['niveau_droits']; // Enregistrement du type d'utilisateur en variable de session
                 header("Location:../../public/index.php?page=accueil"); // Redirection vers la page d'accueil
                 exit;
             } else {

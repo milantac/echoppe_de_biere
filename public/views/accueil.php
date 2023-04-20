@@ -15,13 +15,13 @@
                 <img src="./images/carrousel_accueil/carrousel-devanture.jpg" class="d-block w-100" alt="devanture">
             </div>
             <div class="carousel-item" data-bs-interval="2000">
-                <img src="./images/carrousel_accueil/carrousel-shop" class="d-block w-100" alt="shop">
+                <img src="./images/carrousel_accueil/carrousel-shop.jpg" class="d-block w-100" alt="shop">
             </div>
             <div class="carousel-item" data-bs-interval="2000">
-                <img src="./images/carrousel_accueil/carrousel-biere" class="d-block w-100" alt="biere">
+                <img src="./images/carrousel_accueil/carrousel-biere.jpg" class="d-block w-100" alt="biere">
             </div>
             <div class="carousel-item" data-bs-interval="2000">
-                <img src="./images/carrousel_accueil/carrousel-bar" class="d-block w-100" alt="bar">
+                <img src="./images/carrousel_accueil/carrousel-bar.jpg" class="d-block w-100" alt="bar">
             </div>
         </div>
         <!-- Bouton suivant du carrousel -->
@@ -32,19 +32,18 @@
     </article>
     <?php
     if (isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] == 1) {
-    ?>
-        <div class="col-3">
-            <a href='index.php?page=form_modif&action=accueil' class="btn btn-info btn-block fw-bold">
-                Modifié la page d'accueil
-            </a>
-        </div>
-    <?php
+        echo `
+            <div class="col-3">
+                <a href='index.php?page=form_modif&action=accueil' class="btn btn-info btn-block fw-bold">
+                    Modifié la page d'accueil
+                </a>
+            </div>
+            `;
     }
-    ?>
-    <?php
+
     // Chargement du contenu du fichier JSON
     require_once('..\models\function_Accueil_Json.php');
-    $data= read_json_file('..\data\accueil.json');
+    $data = read_json_file('..\data\accueil.json');
 
     // Récupérez les informations
     $resultat = $data['accueil'];
@@ -53,15 +52,14 @@
     $paragraphe_deux = $resultat["paragraphe_deux"];
     $paragraphe_trois = $resultat["paragraphe_trois"];
     $paragraphe_quatre = $resultat["paragraphe_quatre"];
-
     ?>
-    <h2 class="text-center bg-light mx-auto col-12 fw-bold h4 my-4 py-3 cadre_bois"><?= $resultat["msg_accueil"]; ?></h2>
+    <h2 class="text-center bg-light mx-auto col-xs-12 col-sm-12 col-md-11 col-lg-11 col-xl-10 col-xxl-10 fw-bold h4 my-4 py-3 cadre_bois"><?= $resultat["msg_accueil"]; ?></h2>
     <!--    A Propos De Nous    -->
     <article id="aProposDeNous" class=" row mx-auto justify-content-center my-2 p-3
-                        col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-6 col-xxl-6
+                        col-xs-12 col-sm-12 col-md-11 col-lg-11 col-xl-10 col-xxl-10
                         txt-Noir bg-biere cadre_noir 
                 ">
-        <div class="row justify-content-center mx-auto">
+        <div class="row justify-content-center mx-auto mb-5">
             <span class="   col-xs-0 col-sm-0 col-md-2 col-lg-2 col-xl-3 col-xxl-3
                             d-none d-lg-block my-auto mx-auto
                         ">
@@ -76,24 +74,27 @@
                 ">
             </span>
         </div>
-        <article id="txt-AproposDeNous" class="bg-light lh-2 mb-3 col-xs-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 col-xxl-11" style="--bs-bg-opacity: .25;">
-            <p class="text-xs-center text-sm-center text-md-start text-lg-start text-xl-start text-xxl-start fw-bold">
-                <?= $paragraphe_un ?>
-            </p>
-            <p class="text-xs-center text-sm-center text-md-start text-lg-start text-xl-start text-xxl-start fw-bold">
-                <?= $paragraphe_deux ?>
-            </p>
-            <p class="text-xs-center text-sm-center text-md-start text-lg-start text-xl-start text-xxl-start fw-bold">
-                <?= $paragraphe_trois ?>
-            </p>
-            <p class="text-xs-center text-sm-center text-md-start text-lg-start text-xl-start text-xxl-start fw-bold">
-                <?= $paragraphe_quatre ?>
-            </p>
-        </article>
+
+        <div class="row justify-content-center mx-auto mb-5">
+            <section id="txt-AproposDeNous" class="bg-light lh-2 m-3 col-xs-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 col-xxl-11" style="--bs-bg-opacity: .25;">
+                <p class="text-xs-center text-sm-center text-md-start text-lg-start text-xl-start text-xxl-start fw-bold">
+                    <?= $paragraphe_un ?>
+                </p>
+                <p class="text-xs-center text-sm-center text-md-start text-lg-start text-xl-start text-xxl-start fw-bold">
+                    <?= $paragraphe_deux ?>
+                </p>
+                <p class="text-xs-center text-sm-center text-md-start text-lg-start text-xl-start text-xxl-start fw-bold">
+                    <?= $paragraphe_trois ?>
+                </p>
+                <p class="text-xs-center text-sm-center text-md-start text-lg-start text-xl-start text-xxl-start fw-bold">
+                    <?= $paragraphe_quatre ?>
+                </p>
+            </section>
+        </div>
     </article>
     <!--    Informations    -->
-    <article id="informationsAccueil" class="   row mx-auto my-2 p-3 justify-content-center
-                    col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-6 col-xxl-6
+    <article id="informationsAccueil" class="   row mx-auto my-2 p-3 justify-content-evenly
+                    col-xs-12 col-sm-12 col-md-11 col-lg-11 col-xl-10 col-xxl-10
                     txt-Noir bg-biere cadre_noir 
                 ">
         <div class="row justify-content-center mx-auto mb-3">
@@ -112,9 +113,7 @@
             </span>
         </div>
         <!--    Horaires D'ouverture    -->
-        <section id="horaire" class="   bg-light border border-3 border-dark my-3
-                        col-xs-10 col-sm-10 col-md-10 col-lg-8 col-xl-8 col-xxl-8
-                    ">
+        <section id="horaire" class="bg-light border border-3 border-dark my-3 col-xs-10 col-sm-10 col-md-10 col-lg-5 col-xl-5 col-xxl-5">
             <!--    Titre de la section horaire    -->
             <div class="row">
                 <h3 class="col-12 txt-Center">Horaires d'ouverture</h3>
@@ -159,9 +158,7 @@
             </div>
         </section>
         <!--    Nous Trouver    -->
-        <section id="Localisation" class="   bg-light border border-3 border-dark mt-3
-                        col-xs-10 col-sm-10 col-md-10 col-lg-8 col-xl-8 col-xxl-8
-                    ">
+        <section id="Localisation" class="   bg-light border border-3 border-dark mt-3 col-xs-10 col-sm-10 col-md-10 col-lg-5 col-xl-5 col-xxl-5">
             <!--    Titre de la section Localisation    -->
             <div class="row">
                 <h3 class="col-12 txt-Center">Nous trouver </h3>

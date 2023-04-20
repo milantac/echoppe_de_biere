@@ -1,7 +1,7 @@
 <?php
 // Paramètres de la base de données
 $host = "localhost"; // adresse du serveur de base de données
-$dbname = "echoppe_de_biere"; // nom de la base de données
+$dbname = "echoppe"; // nom de la base de données (echoppe_de_biere)
 $username = "root"; // nom d'utilisateur de la base de données
 $password = ""; // mot de passe de la base de données
 

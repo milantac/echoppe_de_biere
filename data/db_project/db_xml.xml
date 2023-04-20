@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- SQL XML created by WWW SQL Designer, https://github.com/ondras/wwwsqldesigner/ -->
+<!-- Active URL: http://localhost/wwwsqldesigner/ -->
+<sql>
+<datatypes db="mysql">
+		<group label="Numeric" color="rgb(238,238,170)">
+			<type label="Integer" length="0" sql="INTEGER" quote=""/>
+			<type label="TINYINT" length="0" sql="TINYINT" quote=""/>
+			<type label="SMALLINT" length="0" sql="SMALLINT" quote=""/>
+			<type label="MEDIUMINT" length="0" sql="MEDIUMINT" quote=""/>
+			<type label="INT" length="0" sql="INT" quote=""/>
+			<type label="BIGINT" length="0" sql="BIGINT" quote=""/>
+			<type label="Decimal" length="1" sql="DECIMAL" re="DEC" quote=""/>
+			<type label="Single precision" length="0" sql="FLOAT" quote=""/>
+			<type label="Double precision" length="0" sql="DOUBLE" re="DOUBLE" quote=""/>
+		</group>
+		<group label="Character" color="rgb(255,200,200)">
+			<type label="Char" length="1" sql="CHAR" quote="'"/>
+			<type label="Varchar" length="1" sql="VARCHAR" quote="'"/>
+			<type label="Text" length="0" sql="MEDIUMTEXT" re="TEXT" quote="'"/>
+			<type label="Binary" length="1" sql="BINARY" quote="'"/>
+			<type label="Varbinary" length="1" sql="VARBINARY" quote="'"/>
+			<type label="BLOB" length="0" sql="BLOB" re="BLOB" quote="'"/>
+		</group>
+		<group label="Date &amp; Time" color="rgb(200,255,200)">
+			<type label="Date" length="0" sql="DATE" quote="'"/>
+			<type label="Time" length="0" sql="TIME" quote="'"/>
+			<type label="Datetime" length="0" sql="DATETIME" quote="'"/>
+			<type label="Year" length="0" sql="YEAR" quote=""/>
+			<type label="Timestamp" length="0" sql="TIMESTAMP" quote="'"/>
+		</group>
+		<group label="Miscellaneous" color="rgb(200,200,255)">
+			<type label="ENUM" length="1" sql="ENUM" quote=""/>
+			<type label="SET" length="1" sql="SET" quote=""/>
+			<type label="Bit" length="0" sql="bit" quote=""/>
+		</group>
+	</datatypes><table x="323" y="331" name="produits">
+<row name="id" null="0" autoincrement="1">
+<datatype>INTEGER</datatype>
+</row>
+<row name="nom" null="0" autoincrement="0">
+<datatype>VARCHAR(48)</datatype>
+<default>'""'</default></row>
+<row name="degres" null="0" autoincrement="0">
+<datatype>DECIMAL</datatype>
+<default>0.0</default></row>
+<row name="stock" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>0</default></row>
+<row name="description" null="1" autoincrement="0">
+<datatype>VARCHAR(256)</datatype>
+<default>NULL</default></row>
+<row name="id_categorie" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<relation table="categories" row="id" />
+</row>
+<row name="id_origines" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<relation table="origines" row="id" />
+</row>
+<row name="contenance" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="img" null="1" autoincrement="0">
+<datatype>VARCHAR(64)</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="551" y="49" name="paniers">
+<row name="id" null="0" autoincrement="1">
+<datatype>INTEGER</datatype>
+</row>
+<row name="date" null="0" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>'timestamp'</default></row>
+<row name="id_user" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<relation table="users" row="id" />
+</row>
+<row name="id_etat_panier" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<relation table="etat_panier" row="id" />
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="654" y="429" name="categories">
+<row name="id" null="0" autoincrement="1">
+<datatype>INTEGER</datatype>
+</row>
+<row name="nom" null="0" autoincrement="0">
+<datatype>VARCHAR(64)</datatype>
+<default>'""'</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="832" y="91" name="users">
+<row name="id" null="0" autoincrement="1">
+<datatype>INTEGER</datatype>
+</row>
+<row name="login" null="0" autoincrement="0">
+<datatype>VARCHAR(64)</datatype>
+<default>'NULL'</default></row>
+<row name="mdp" null="0" autoincrement="0">
+<datatype>VARCHAR(34)</datatype>
+<default>'0'</default></row>
+<row name="nom" null="1" autoincrement="0">
+<datatype>VARCHAR(32)</datatype>
+<default>NULL</default></row>
+<row name="prenom" null="1" autoincrement="0">
+<datatype>VARCHAR(32)</datatype>
+<default>NULL</default></row>
+<row name="niveau_droits" null="1" autoincrement="0">
+<datatype>INTEGER(1)</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="559" y="291" name="etat_panier">
+<row name="id" null="0" autoincrement="1">
+<datatype>INTEGER</datatype>
+</row>
+<row name="nom" null="0" autoincrement="0">
+<datatype>VARCHAR(32)</datatype>
+<default>'NULL'</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="1105" y="265" name="livre_or_commentaires">
+<row name="id" null="0" autoincrement="1">
+<datatype>INTEGER</datatype>
+</row>
+<row name="id_users" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<relation table="users" row="id" />
+</row>
+<row name="date" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>'timestamp'</default></row>
+<row name="commentaire" null="0" autoincrement="0">
+<datatype>VARCHAR(256)</datatype>
+<default>'NULL'</default></row>
+<row name="validation" null="1" autoincrement="0">
+<datatype>bit</datatype>
+<default>0</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="150" y="483" name="origines">
+<row name="id" null="0" autoincrement="1">
+<datatype>INTEGER</datatype>
+</row>
+<row name="nom" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="312" y="38" name="panier_produits">
+<row name="quantite" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>1</default></row>
+<row name="id_paniers" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<relation table="paniers" row="id" />
+</row>
+<row name="id_produit" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<relation table="produits" row="id" />
+</row>
+<key type="PRIMARY" name="">
+<part>quantite</part>
+</key>
+</table>
+</sql>
