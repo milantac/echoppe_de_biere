@@ -1,0 +1,53 @@
+{
+    "accueil": {
+        "msg_accueil": "Bienvenu a tous",
+        "paragraphe_un": "Bienvenue sur le site internet de l'\u00c9choppe de Bi\u00e8re de Joeuf, votre destination incontournable pour les amateurs de bi\u00e8re dans la r\u00e9gion de Lorraine. Situ\u00e9 au 44 rue de Franchepr\u00e9, 54240 \u00e0 Joeuf, notre \u00e9tablissement est un v\u00e9ritable paradis pour les connaisseurs de bi\u00e8res artisanales, les amateurs de saveurs uniques et les curieux \u00e0 la recherche de nouvelles exp\u00e9riences gustatives.",
+        "paragraphe_deux": "Notre \u00c9choppe de bi\u00e8re offre deux options pour profiter de notre large s\u00e9lection de bi\u00e8res : la vente de bi\u00e8res \u00e0 emporter dans notre cave \u00e0 bi\u00e8res et la d\u00e9gustation sur place dans notre bar \u00e0 bi\u00e8res. Nous sommes fiers de proposer une grande vari\u00e9t\u00e9 de bi\u00e8res artisanales, en provenance des brasseries locales et internationales les plus r\u00e9put\u00e9es. Notre \u00e9quipe de passionn\u00e9s de bi\u00e8res est l\u00e0 pour vous conseiller et vous aider \u00e0 trouver la bi\u00e8re qui r\u00e9pondra \u00e0 vos attentes, que vous cherchiez une bi\u00e8re blonde l\u00e9g\u00e8re, une IPA houblonn\u00e9e ou une bi\u00e8re noire robuste.",
+        "paragraphe_trois": "Nous sommes \u00e9galement ravis de proposer des \u00e9v\u00e9nements r\u00e9guliers tels que des soir\u00e9es \u00e0 th\u00e8me, des d\u00e9gustations de bi\u00e8res et des rencontres avec des brasseurs locaux. Notre bar \u00e0 bi\u00e8res est l'endroit id\u00e9al pour se d\u00e9tendre et socialiser, tout en d\u00e9couvrant de nouvelles saveurs et en partageant sa passion pour la bi\u00e8re.",
+        "paragraphe_quatre": "Nous sommes impatients de vous accueillir \u00e0 l'\u00c9choppe de Bi\u00e8re de Joeuf, que vous soyez un habitu\u00e9 ou un nouveau venu. Venez d\u00e9couvrir notre s\u00e9lection de bi\u00e8res artisanales et notre ambiance conviviale, et laissez-nous vous faire vivre une exp\u00e9rience de d\u00e9gustation de bi\u00e8res inoubliable."
+    },
+    "horaires": [
+        {
+            "id_horaire_ouverture": 1,
+            "jour": "Lundi",
+            "horaire_matin": "Ferm\u00e9",
+            "horaire_apres_midi": "Ferm\u00e9"
+        },
+        {
+            "id_horaire_ouverture": 1,
+            "jour": "Mardi",
+            "horaire_matin": "09:00 - 12:00",
+            "horaire_apres_midi": "14:00 - 18:00"
+        },
+        {
+            "id_horaire_ouverture": 1,
+            "jour": "Mercredi",
+            "horaire_matin": "09:00 - 12:00",
+            "horaire_apres_midi": "14:00 - 18:00"
+        },
+        {
+            "id_horaire_ouverture": 1,
+            "jour": "Jeudi",
+            "horaire_matin": "09:00 - 12:00",
+            "horaire_apres_midi": "14:00 - 18:00"
+        },
+        {
+            "id_horaire_ouverture": 1,
+            "jour": "Vendredi",
+            "horaire_matin": "09:00 - 12:00",
+            "horaire_apres_midi": "14:00 - 18:00"
+        },
+        {
+            "id_horaire_ouverture": 1,
+            "jour": "Samedi",
+            "horaire_matin": "09:00 - 12:00",
+            "horaire_apres_midi": "14:00 - 18:00"
+        },
+        {
+            "id_horaire_ouverture": 1,
+            "jour": "Dimanche",
+            "horaire_matin": "Ferm\u00e9",
+            "horaire_apres_midi": "Ferm\u00e9"
+        }
+    ]
+}

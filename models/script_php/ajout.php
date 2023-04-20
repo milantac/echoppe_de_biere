@@ -1,6 +1,7 @@
 <?php
 // Inclure le fichier de connexion à la base de données
 include('./connexion-BDD.php');
+require_once '../../models/function_Accueil_Json.php';
 
 // Vérifier si l'action est définie dans l'URL et n'est pas vide
 if (isset($_GET['action']) && !empty($_GET['action'])) {
@@ -16,27 +17,28 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
                 $paragraphe_trois = $_POST['para_accueil_trois'];
                 $paragraphe_quatre = $_POST['para_accueil_quatre'];
 
-                // Mettre à jour le message d'accueil
-                $sql = "UPDATE accueil SET msg_accueil = ? WHERE id_accueil = ?";
-                $stmt = $bdd->prepare($sql);
-                $stmt->execute([$msg_accueil, $id_msg]);
+                // Récupérer les données du fichier JSON
+                $json_file_path = '../../data/accueil.json';
+                $accueil_data = read_json_file($json_file_path);
 
-                // Mettre à jour les paragraphes à propos de nous
-                $sql = "UPDATE a_propos_de_nous SET paragraphe_un = ?, paragraphe_deux = ?, paragraphe_trois = ?, paragraphe_quatre = ? WHERE id_msg_accueil = ?";
-                $stmt = $bdd->prepare($sql);
-                $stmt->execute([$paragraphe_un, $paragraphe_deux, $paragraphe_trois, $paragraphe_quatre, $id_msg]);
+                // Mettre à jour les données
+                $accueil_data['accueil']['msg_accueil'] = $msg_accueil;
+                $accueil_data['accueil']['paragraphe_un'] = $paragraphe_un;
+                $accueil_data['accueil']['paragraphe_deux'] = $paragraphe_deux;
+                $accueil_data['accueil']['paragraphe_trois'] = $paragraphe_trois;
+                $accueil_data['accueil']['paragraphe_quatre'] = $paragraphe_quatre;
 
-                // Mettre à jour les horaires d'ouverture
                 for ($i = 1; $i <= 7; $i++) {
                     if (isset($_POST["horaire_matin_$i"], $_POST["horaire_apres_midi_$i"])) {
                         $horaire_matin = $_POST["horaire_matin_$i"];
                         $horaire_apres_midi = $_POST["horaire_apres_midi_$i"];
-
-                        $sql = "UPDATE horaire_ouverture SET horaire_matin = ?, horaire_apres_midi = ? WHERE id_horaire_ouverture = ?";
-                        $stmt = $bdd->prepare($sql);
-                        $stmt->execute([$horaire_matin, $horaire_apres_midi, $i]);
+                        $accueil_data['horaires'][$i - 1]['horaire_matin'] = $horaire_matin;
+                        $accueil_data['horaires'][$i - 1]['horaire_apres_midi'] = $horaire_apres_midi;
                     }
                 }
+
+                // Écrire les données mises à jour dans le fichier JSON
+                write_json_file($json_file_path, $accueil_data);
 
                 // Rediriger vers la page d'accueil après la mise à jour
                 header("Location:../../public/index.php?page=accueil");

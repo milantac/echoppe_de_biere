@@ -30,30 +30,43 @@
             <span class="visually-hidden">Next</span>
         </button>
     </article>
-    <?php
-    if (isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] == 1) {
-    ?>
+<?php
+    if(isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur']==1){
+?>
         <div class="col-3">
             <a href='index.php?page=form_modif&action=accueil' class="btn btn-info btn-block fw-bold">
                 Modifié la page d'accueil
             </a>
         </div>
-    <?php
+<?php
     }
-    ?>
-    <?php
-    // Chargement du contenu du fichier JSON
-    require_once('..\models\function_Accueil_Json.php');
-    $data= read_json_file('..\data\accueil.json');
+?>
+<?php
+    // Préparez la requête préparée pour récupérer les informations de plusieurs tables
+    $sql = "SELECT *
+            FROM accueil
+            JOIN a_propos_de_nous ON accueil.id_msg_accueil = a_propos_de_nous.id_msg_accueil
+            WHERE accueil.id_accueil = 1";
 
-    // Récupérez les informations
-    $resultat = $data['accueil'];
-    $msg_accueil = $resultat["msg_accueil"];
-    $paragraphe_un = $resultat["paragraphe_un"];
-    $paragraphe_deux = $resultat["paragraphe_deux"];
-    $paragraphe_trois = $resultat["paragraphe_trois"];
-    $paragraphe_quatre = $resultat["paragraphe_quatre"];
+    // Préparez la déclaration
+    $stmt = $bdd->prepare($sql);
 
+    // Exécutez la déclaration
+    $stmt->execute();
+
+    // Récupérez le résultat
+    $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Parcourez et stockez les résultats
+    if ($resultat) {
+        $msg_accueil = $resultat["msg_accueil"];
+        $paragraphe_un = $resultat["paragraphe_un"];
+        $paragraphe_deux = $resultat["paragraphe_deux"];
+        $paragraphe_trois = $resultat["paragraphe_trois"];
+        $paragraphe_quatre = $resultat["paragraphe_quatre"];
+    } else {
+        echo "0 résultats";
+    }
     ?>
     <h2 class="text-center bg-light mx-auto col-12 fw-bold h4 my-4 py-3 cadre_bois"><?= $resultat["msg_accueil"]; ?></h2>
     <!--    A Propos De Nous    -->
@@ -131,24 +144,31 @@
                             <th class="txt-End">Aprés-midi</th>
                         </tr>
                     </thead>
-                    <!--    corps du tableau    -->
+                    <!--    corp^s du tableau    -->
                     <tbody class="table-secondary">
                         <?php
-                        // Récupérer les horaires à partir du fichier JSON
-                        $horaires = $data['horaires'];
+                        // Préparer la requête SQL avec des paramètres
+                        $sql = "SELECT id_horaire_ouverture, jour, horaire_matin, horaire_apres_midi FROM horaire_ouverture";
+                        $stmt = $bdd->prepare($sql);
 
-                        // Afficher les horaires dans le tableau
-                        foreach ($horaires as $horaire) {
+                        // Exécuter la requête préparée
+                        $stmt->execute();
+
+                        // Récupérer les résultats sous forme d'un tableau associatif
+                        $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                        // Afficher les résultats dans le tableau
+                        foreach ($resultats as $resultat) {
                         ?>
                             <tr>
                                 <td class='txt-Start'>
-                                    <?= $horaire['jour'] ?>
+                                    <?= $resultat['jour']   ?>
                                 </td>
                                 <td class='txt-End'>
-                                    <?= $horaire['horaire_matin'] ?>
+                                    <?= $resultat['horaire_matin'] ?>
                                 </td>
                                 <td class='txt-End'>
-                                    <?= $horaire['horaire_apres_midi'] ?>
+                                    <?= $resultat['horaire_apres_midi']    ?>
                                 </td>
                             </tr>
                         <?php
