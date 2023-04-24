@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS echoppe
+DROP DATABASE IF EXISTS echoppe;
 CREATE DATABASE echoppe;
 use echoppe;
 -- ---

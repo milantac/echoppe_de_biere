@@ -12,10 +12,10 @@
 </div>
 <?php
 // Préparation de la requête SQL
-$sql = "SELECT biere.id_biere, biere.nom_biere, biere.photo, biere.degres_d_alcool, biere.quantite, biere.description, biere.en_stock, type_de_biere.couleur, origine.pays
-        FROM biere
-        JOIN type_de_biere ON biere.id_type_de_biere = type_de_biere.id_type_biere
-        JOIN origine ON biere.id_origine = origine.id_origine";
+$sql = "SELECT produits.id, produits.nom AS nom_biere, produits.img AS photo, produits.degres, produits.contenance, produits.description, produits.stock, categories.nom AS couleur, origines.nom AS pays
+        FROM produits
+        JOIN categories ON produits.id_categories = categories.id
+        JOIN origines ON produits.id_origines = origines.id";
 // Préparation de la requête avec l'objet PDO
 $stmt = $bdd->prepare($sql);
 // Exécution de la requête
@@ -53,10 +53,10 @@ if ($stmt->rowCount() > 0) {
                   <td class="d-none"><?= $id_biere ?></td>
                   <td><?= $row['nom_biere'] ?></td>
                   <td><img src='./images/produits/<?= $row['photo'] ?>' class='img-fluid rounded-start w-100' alt='<?= $row['photo'] ?>'></td>
-                  <td><?= $row['degres_d_alcool'] ?></td>
-                  <td><?= $row['quantite'] ?> cl</td>
+                  <td><?= $row['degres'] ?></td>
+                  <td><?= $row['contenance'] ?> cl</td>
                   <td><?= $row['description'] ?></td> 
-                  <td><?= $row["en_stock"] ? "<span class='text-success'>Oui</span>" : "<span class='text-danger'>Non</span>" ?></td>
+                  <td><?= $row["stock"] ? "<span class='text-success'>Oui</span>" : "<span class='text-danger'>Non</span>" ?></td>
                   <td><?= $row['couleur'] ?></td>
                   <td><?= $row['pays'] ?></td>
                   <td><a href="index.php?page=form_modifier_biere&id=<?= $id_biere ?>" class="btn btn-primary">Modifier</a></td>
@@ -84,7 +84,7 @@ if ($stmt->rowCount() > 0) {
                 <div class="col-md-8">
                   <div class="card-header">
                     <!-- Affichage du titre et de la quantité de la bière -->
-                    <h5 class="card-title"><?= $row["nom_biere"] ?> en <?= $row["quantite"] ?>cl</h5>
+                    <h5 class="card-title"><?= $row["nom_biere"] ?></h5>
                   </div>
                   <div class="card-body">
                     <!-- Affichage des 200 premiers caractères de la description et du contenu entier au survol -->
@@ -95,7 +95,12 @@ if ($stmt->rowCount() > 0) {
                       <br>
                       <a href="#" data-bs-toggle="modal" data-bs-target="#descriptionModal<?= $modal_id ?>">lire la suite</a>
                     </p>
-                    <p class="card-text fw-bold" title="dispo">En stock: <?= ($row["en_stock"] ? "<span class='text-success'>Oui</span>" : "<span class='text-danger'>Non</span>") ?></p>
+                      <p class="card-text fw-bold"><?= $row["contenance"] ?>cl
+                      <br>
+                      En stock: <?= ($row["stock"]>0 ? "<span class='text-success'>Oui</span>" : "<span class='text-danger'>Non</span>") ?>
+                      <br>
+                      Stock disponible: <?= $row["stock"] ?>
+                    </p>
 
                   </div>
                   <div class="card-header">
