@@ -1,6 +1,3 @@
-DROP DATABASE IF EXISTS echoppe;
-CREATE DATABASE echoppe;
-use echoppe;
 -- ---
 -- Globals
 -- ---
@@ -9,21 +6,25 @@ use echoppe;
 -- SET FOREIGN_KEY_CHECKS=0;
 
 -- ---
+-- base de données
+-- 
+-- ---
+CREATE DATABASE IF NOT EXISTS echoppe; -- création de la base de données si elle n'existe pas
+USE echoppe; -- utilisation de la base de données
+-- ---
 -- Table 'produits'
 -- 
 -- ---
 
-DROP TABLE IF EXISTS `produits`;
-		
-CREATE TABLE `produits` (
-  `id` INTEGER NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `produits` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(48) NOT NULL DEFAULT '""',
   `degres` DECIMAL NOT NULL DEFAULT 0.0,
-  `stock` INTEGER NOT NULL DEFAULT 0,
+  `stock` int NOT NULL DEFAULT 0,
   `description` VARCHAR(256) NULL DEFAULT NULL,
-  `id_categorie` INTEGER NULL,
-  `id_origines` INTEGER NULL,
-  `contenance` INTEGER NULL DEFAULT NULL,
+  `id_categorie` int NULL DEFAULT NULL,
+  `id_origines` int NULL DEFAULT NULL,
+  `contenance` int NULL DEFAULT NULL,
   `img` VARCHAR(64) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
@@ -33,13 +34,11 @@ CREATE TABLE `produits` (
 -- 
 -- ---
 
-DROP TABLE IF EXISTS `paniers`;
-		
-CREATE TABLE `paniers` (
-  `id` INTEGER NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `paniers` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `id_user` INTEGER NULL,
-  `id_etat_panier` INTEGER NULL,
+  `id_user` int NULL DEFAULT NULL,
+  `id_etat_panier` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -47,11 +46,8 @@ CREATE TABLE `paniers` (
 -- Table 'categories'
 -- 
 -- ---
-
-DROP TABLE IF EXISTS `categories`;
-		
-CREATE TABLE `categories` (
-  `id` INTEGER NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(64) NOT NULL DEFAULT '""',
   PRIMARY KEY (`id`)
 );
@@ -61,15 +57,18 @@ CREATE TABLE `categories` (
 -- 
 -- ---
 
-DROP TABLE IF EXISTS `users`;
-		
 CREATE TABLE `users` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
-  `login` VARCHAR(64) NOT NULL DEFAULT 'NULL',
-  `mdp` VARCHAR(34) NOT NULL DEFAULT '0',
-  `nom` VARCHAR(32) NULL DEFAULT NULL,
-  `prenom` VARCHAR(32) NULL DEFAULT NULL,
-  `niveau_droits` INTEGER(1) NULL DEFAULT NULL,
+  `nom` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `prenom` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `login` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'NULL',
+  `tel` int NOT NULL,
+  `numero_adresse` int NOT NULL,
+  `voie_adresse` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `code_postal` int NOT NULL,
+  `ville_adresse` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `mdp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0',
+  `niveau_droits` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -78,10 +77,8 @@ CREATE TABLE `users` (
 -- 
 -- ---
 
-DROP TABLE IF EXISTS `etat_panier`;
-		
-CREATE TABLE `etat_panier` (
-  `id` INTEGER NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `etat_panier` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(32) NOT NULL DEFAULT 'NULL',
   PRIMARY KEY (`id`)
 );
@@ -90,13 +87,10 @@ CREATE TABLE `etat_panier` (
 -- Table 'livre_or_commentaires'
 -- 
 -- ---
-
-DROP TABLE IF EXISTS `livre_or_commentaires`;
-		
-CREATE TABLE `livre_or_commentaires` (
-  `id` INTEGER NOT NULL AUTO_INCREMENT,
-  `id_users` INTEGER NULL,
-  `date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP,
+CREATE TABLE IF NOT EXISTS `livre_or_commentaires` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_users` int NULL DEFAULT NULL,
+  `date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `commentaire` VARCHAR(256) NOT NULL DEFAULT 'NULL',
   `validation` bit NULL DEFAULT 0,
   PRIMARY KEY (`id`)
@@ -110,8 +104,8 @@ CREATE TABLE `livre_or_commentaires` (
 DROP TABLE IF EXISTS `origines`;
 		
 CREATE TABLE `origines` (
-  `id` INTEGER NOT NULL AUTO_INCREMENT,
-  `nom` INTEGER NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nom` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -123,12 +117,18 @@ CREATE TABLE `origines` (
 DROP TABLE IF EXISTS `panier_produits`;
 		
 CREATE TABLE `panier_produits` (
-  `quantite` INTEGER NOT NULL DEFAULT 1,
-  `id_paniers` INTEGER NULL,
-  `id_produit` INTEGER NULL,
+  `quantite` int NOT NULL DEFAULT 1,
+  `id_paniers` int NULL DEFAULT NULL,
+  `id_produit` int NULL DEFAULT NULL,
   PRIMARY KEY (`quantite`)
 );
-
+DROP TABLE IF EXISTS `type_users`;
+		
+CREATE TABLE `type_users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nom` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id`)
+);
 -- ---
 -- Foreign Keys 
 -- ---
@@ -137,40 +137,61 @@ ALTER TABLE `produits` ADD FOREIGN KEY (id_categorie) REFERENCES `categories` (`
 ALTER TABLE `produits` ADD FOREIGN KEY (id_origines) REFERENCES `origines` (`id`);
 ALTER TABLE `paniers` ADD FOREIGN KEY (id_user) REFERENCES `users` (`id`);
 ALTER TABLE `paniers` ADD FOREIGN KEY (id_etat_panier) REFERENCES `etat_panier` (`id`);
+ALTER TABLE `users` ADD FOREIGN KEY (niveau_droits) REFERENCES `type_users` (`id`);
 ALTER TABLE `livre_or_commentaires` ADD FOREIGN KEY (id_users) REFERENCES `users` (`id`);
 ALTER TABLE `panier_produits` ADD FOREIGN KEY (id_paniers) REFERENCES `paniers` (`id`);
 ALTER TABLE `panier_produits` ADD FOREIGN KEY (id_produit) REFERENCES `produits` (`id`);
+
 
 -- ---
 -- Table Properties
 -- ---
 
--- ALTER TABLE `produits` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `paniers` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `categories` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `users` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `etat_panier` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `livre_or_commentaires` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `origines` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `panier_produits` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+ALTER TABLE `produits` ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ALTER TABLE `paniers` ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ALTER TABLE `categories` ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ALTER TABLE `users` ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ALTER TABLE `etat_panier` ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ALTER TABLE `livre_or_commentaires` ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ALTER TABLE `origines` ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ALTER TABLE `panier_produits` ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ALTER TABLE `type_users` ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ---
 -- Test Data
 -- ---
 
--- INSERT INTO `produits` (`id`,`nom`,`degres`,`stock`,`description`,`id_categorie`,`id_origines`,`contenance`,`img`) VALUES
--- ('','','','','','','','','');
--- INSERT INTO `paniers` (`id`,`date`,`id_user`,`id_etat_panier`) VALUES
--- ('','','','');
--- INSERT INTO `categories` (`id`,`nom`) VALUES
--- ('','');
--- INSERT INTO `users` (`id`,`login`,`mdp`,`nom`,`prenom`,`niveau_droits`) VALUES
--- ('','','','','','');
--- INSERT INTO `etat_panier` (`id`,`nom`) VALUES
--- ('','');
+INSERT INTO `categories` (`nom`) VALUES
+('Ambrée'),('Blanche'),('Blonde'),('Brune'),('Noire'),('Rouge'),('Autre');
+INSERT INTO `users` (`nom`, `prenom`, `login`, `tel`, `numero_adresse`, `voie_adresse`, `code_postal`, `ville_adresse`, `mdp`, `niveau_droits`) VALUES
+('milant', 'milant', 'mil@ant.fr', 123456789, 32, 'rue jeanned\'arc', 54111, 'Mont-Bonvillers', '$2y$10$8OdQcxnK84HuramoDlm6ReeiduBke0BKjf4g4cDYYatUN.YXbh0B.', 1),
+('tarte', 'aux pommes', 'milant@milant.fr', 612345789, 32, 'rue jeanned\'arc', 54111, 'Mont-Bonvillers', '$2y$10$8OdQcxnK84HuramoDlm6ReeiduBke0BKjf4g4cDYYatUN.YXbh0B.', 2);
+INSERT IGNORE INTO `etat_panier` (`id`, `nom`) VALUES
+(1, 'En cours'),(2, 'Validé'),(3, 'Annulé');
 -- INSERT INTO `livre_or_commentaires` (`id`,`id_users`,`date`,`commentaire`,`validation`) VALUES
 -- ('','','','','');
--- INSERT INTO `origines` (`id`,`nom`) VALUES
--- ('','');
+INSERT INTO `origines` (`nom`) VALUES
+('France'),('Allemagne'),('Belge'),('Espagne'),('Portugal'),('Royaume-Uni'),('Italie'),('Pays-Bas'),('Suisse'),
+('Irlande'),('Autriche'),('Danemark'),('Suède'),('Norvège'),('Finlande'),('Pologne'),('République tchèque'),('Slovaquie'),('Hongrie'),
+('Roumanie'),('Bulgarie'),('Grèce'),('Ukraine'),('Biélorussie'),('Russie'),('Turquie'),('États-Unis'),('Canada'),('Mexique'),
+('Brésil'),('Argentine'),('Chili'),('Colombie'),('Pérou'),('Venezuela'),('Australie'),('Nouvelle-Zélande'),('Japon'),('Corée du Sud'),
+('Chine'),('Inde'),('Pakistan'),('Bangladesh'),('Indonésie'),('Malaisie'),('Philippines'),('Singapour'),('Vietnam'),('Afrique du Sud'),
+('Égypte'),('Kenya'),('Nigeria'),('Algérie'),('Afghanistan'),('Albanie'),('Andorre'),('Angola'),('Antigua-et-Barbuda'),('Arabie saoudite'),
+('Arménie'),('Azerbaïdjan'),('Bahamas'),('Bahreïn'),('Barbade'),('Belgique'),('Belize'),('Bénin'),('Bhoutan'),('Birmanie'),('Bolivie'),
+('Bosnie-Herzégovine'),('Botswana'),('Brunei'),('Burkina Faso'),('Burundi'),('Cambodge'),('Cameroun'),('Cap-Vert'),('Centrafrique'),('Comores'),
+('Congo-Brazzaville'),('Congo-Kinshasa'),('Corée du Nord'),('Costa Rica'),('Côte d\'Ivoire'),('Croatie'),('Cuba'),('Djibouti'),('Dominique'),('Émirats arabes unis'),
+('Équateur'),('Érythrée'),('Estonie'),('Eswatini'),('Éthiopie'),('Fidji'),('Gabon'),('Gambie'),('Géorgie'),('Ghana'),
+('Grenade'),('Guatemala'),('Guinée'),('Guinée équatoriale'),('Guinée-Bissau'),('Guyana'),('Haïti'),('Honduras'),('Îles Marshall'),('Irak'),('Iran'),
+('Islande'),('Israël'),('Jamaïque'),('Jordanie'),('Kazakhstan'),('Kirghizistan'),('Kiribati'),('Koweït'),('Laos'),('Lesotho'),
+('Lettonie'),('Liban'),('Liberia'),('Libye'),('Liechtenstein'),('Lituanie'),('Luxembourg'),('Macédoine du Nord'),('Madagascar'),('Malawi'),
+('Maldives'),('Mali'),('Malte'),('Maroc'),('Maurice'),('Mauritanie'),('Micronésie'),('Moldavie'),('Monaco'),('Mongolie'),
+('Monténégro'),('Mozambique'),('Namibie'),('Nauru'),('Népal'),('Nicaragua'),('Niger'),('Niué'),('Oman'),('Ouganda'),('Ouzbékistan'),('Palaos'),('Panama'),('Papouasie-Nouvelle-Guinée'),('Paraguay'),('Qatar'),('République dominicaine'),('Rwanda'),('Saint-Kitts-et-Nevis'),
+('Saint-Vincent-et-les Grenadine'),
+('Sainte-Lucie'),('Saint-Marin'),('Salomon'),('Salvador'),('Samoa'),('São Tomé-et-Principe'),('Sénégal'),('Serbie'),('Seychelles'),('Sierra Leone'),
+('Singapour'),('Slovénie'),('Somalie'),('Soudan'),('Soudan du Sud'),('Sri Lanka'),('Suriname'),('Syrie'),('Tadjikistan'),('Tanzanie'),
+('Tchad'),('Thaïlande'),('Timor oriental'),('Togo'),('Tonga'),('Trinité-et-Tobago'),('Tunisie'),('Turkménistan'),('Tuvalu'),('Uruguay'),
+('Vanuatu'),('Vatican'),('Venezuela'),('Viêt Nam'),('Yémen'),('Zambie'),('Zimbabwe');
 -- INSERT INTO `panier_produits` (`quantite`,`id_paniers`,`id_produit`) VALUES
 -- ('','','');
+INSERT IGNORE INTO `type_users` (`nom`) VALUES
+('administrateur'),('utilisateur');

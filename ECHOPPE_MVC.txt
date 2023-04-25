@@ -1,0 +1,70 @@
+ECHOPPE_DE_BIERE-MAIN
+├── .vscode
+├── API
+├── controllers
+│   ├── AccueilController.php
+│   ├── controllers.php
+│   └── LivreDOrController.php
+├── data
+│   ├── db_project
+│   │   ├── db_sql.sql
+│   │   └── db_xml.xml
+│   └── accueil.json      
+├── includes
+│   ├── footer.php
+│   └── header.php
+├── models
+│   ├── script_php
+│   │   ├── ajout.php
+│   │   ├── connexion-BDD.php
+│   │   ├── deconnexion.php
+│   │   ├── inscription.php
+│   │   └── login.php
+│   ├── Accueil.php
+│   ├── function_Accueil_Json.php
+│   ├── LivreDOr.php
+│   ├── Reservation.php
+│   └── User.php
+├── public
+│   ├── bootstrap-5.3.0-alpha1-dist
+│   │   ├── css
+│   │   └── js
+├── css
+│   ├── animation_style.css
+│   ├── bg_style.css
+│   ├── style.css
+│   ├── livre-d-or.css
+│   └── txt_style.css
+├── images
+│   ├── images
+│   │   ├── border
+│   │   │   ├── 89746.png
+│   │   │   └── cadre_noir.png
+│   │   ├── carroussel
+│   │   │   ├── carrousel-shop.jpg
+│   │   │   └── devanture.jpg
+│   │   ├── fond
+│   │   │   ├── background_header_footer.jpg
+│   │   │   └── mur-briques.jpg
+│   │   ├── logo
+│   │   │   ├── l_échoppe_de_bière.jpg
+│   │   │   ├── LOGO VECTORIEL.eps
+│   │   │   └── Logo_Vectoriel.svg
+│   │   ├── produits
+│   │   │   ├── erdinger_dunkel_50cl.webp
+│   │   │   ├── Kwak_Rouge_33cl.webp
+│   │   │   └── VAL_DIEU_GRAND_CRU_33_CL.webp
+│   │   ├── 403.png
+│   │   └── 404.png
+│   ├── js
+│   │   ├── form_livre_d_or.js
+│   │   ├── livre-d-or.js
+│   │   └── produit.js
+│   └── views
+│       ├── 403.php
+│       ├── 404.php
+│       ├── accueil.php
+│       ├── form_ajout.php
+│       └── contactez-nous.php
+├── index.php
+└── README.md

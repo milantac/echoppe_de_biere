@@ -32,13 +32,14 @@
     </article>
     <?php
     if (isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] == 1) {
-        echo `
-            <div class="col-3">
-                <a href='index.php?page=form_modif&action=accueil' class="btn btn-info btn-block fw-bold">
-                    Modifié la page d'accueil
-                </a>
-            </div>
-            `;
+
+        echo "<div class='row justify-content-center'>
+                <div class='col-3'>
+                    <a href='index.php?page=form_modif&action=accueil' class='btn btn-info btn-block fw-bold'>
+                        Modifié la page d'accueil
+                    </a>
+                </div>
+                </div>";
     }
 
     // Chargement du contenu du fichier JSON
