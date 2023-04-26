@@ -82,7 +82,7 @@ session_start(); // lancement de la session
     ?>
     <?php include("../includes/header.php"); ?>
 
-    <main class="container-fluid g-0">
+    <main class="container-fluid">
         <div class="row justify-content-center">
             <?php
             // Tableau contenant les pages autorisées

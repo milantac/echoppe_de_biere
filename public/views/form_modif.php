@@ -4,7 +4,7 @@ $test = require_once('..\models\function_Accueil_Json.php');
 <?php
 // Je vérifie que l'utilisateur est bien administrateur pour effectuer des modifications
 if (!isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] != 1) { // Si l'utilisateur n'est pas connecté en tant qu'administrateur
-    echo'prout';
+    echo 'prout';
     header('Location: ../index.php?page=403'); // Rediriger vers une page d'erreur 404
     exit; // Arrêter l'exécution du script
 } else {
@@ -13,7 +13,7 @@ if (!isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] != 1)
     // Je vérifie si l'action est définie dans l'URL et n'est pas vide
     if (isset($_GET["action"]) && !empty($_GET["action"])) {   // Si une action est spécifiée dans l'URL
         switch ($_GET["action"]) {
-            case 'accueil':  
+            case 'accueil':
                 // Préparez la requête préparée pour récupérer les informations de plusieurs tables
                 // Charger les données du fichier JSON
                 $data = read_json_file(__DIR__ . '/../../data/accueil.json');
@@ -99,7 +99,7 @@ if (!isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] != 1)
                                         <!--    corps du tableau    -->
                                         <tbody class="table-secondary">
                                             <?php
-                                            
+
 
                                             // Afficher les résultats dans le tableau
                                             foreach ($horaires_data as $key => $resultat) {
@@ -109,10 +109,10 @@ if (!isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] != 1)
                                                         <?= $resultat['jour']   ?>
                                                     </td>
                                                     <td class='txt-End'>
-                                                    <input type="text" class="form-control" id="horaire_matin_<?= $resultat['id_horaire_ouverture'] ?>" name="horaire_matin_<?= $key ?>" value="<?= $resultat['horaire_matin'] ?>">
+                                                        <input type="text" class="form-control" id="horaire_matin_<?= $resultat['id_horaire_ouverture'] ?>" name="horaire_matin_<?= $key ?>" value="<?= $resultat['horaire_matin'] ?>">
                                                     </td>
                                                     <td class='txt-End'>
-                                                    <input type="text" class="form-control" id="horaire_apres_midi_<?= $resultat['id_horaire_ouverture'] ?>" name="horaire_apres_midi_<?= $key ?>" value="<?= $resultat['horaire_apres_midi'] ?>">
+                                                        <input type="text" class="form-control" id="horaire_apres_midi_<?= $resultat['id_horaire_ouverture'] ?>" name="horaire_apres_midi_<?= $key ?>" value="<?= $resultat['horaire_apres_midi'] ?>">
                                                     </td>
                                                 </tr>
                                             <?php
@@ -126,7 +126,53 @@ if (!isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] != 1)
                     </section>
                     <button type="submit" class="btn btn-primary my-2 col-2">changer</button>
                 </form>
+            <?php
+                break;
+
+            case 'produit':
+            ?>
+                <article class="container cadre_noir m-4 p-3 bg-light">
+                    <h1 class='text-center'>Modifier un produit</h1>
+                    <form action="votre_script_de_traitement.php" method="post">
+                        <input type="hidden" name="id" id="id" value="">
+                        <div class="row mx-2">
+                            <label for="nom">Nom:</label>
+                            <input type="text" name="nom" id="nom" maxlength="48" required>
+
+                            <label for="degres">Degrés:</label>
+                            <input type="number" name="degres" id="degres" step="1" min="0" required>
+
+                            <label for="stock">Stock:</label>
+                            <input type="number" name="stock" id="stock" min="0" required>
+
+                        </div>
+                        <label for="description">Description:</label>
+                        <textarea name="description" id="description" maxlength="256"></textarea>
+                        <br>
+
+                        <label for="id_categories">Catégorie:</label>
+                        <input type="number" name="id_categories" id="id_categories">
+                        <br>
+
+                        <label for="id_origines">Origine:</label>
+                        <input type="number" name="id_origines" id="id_origines">
+                        <br>
+
+                        <label for="contenance">Contenance:</label>
+                        <input type="number" name="contenance" id="contenance">
+                        <br>
+
+                        <label for="img">Image:</label>
+                        <input type="text" name="img" id="img" maxlength="64">
+                        <br>
+
+                        <button type="submit" class="btn btn-primary">Modifier le produit</button>
+                    </form>
+                </article>
+
+
 <?php
+                break;
         }
     } else {
         // Rediriger vers la page 404 si l'utilisateur n'a pas les autorisations nécessaires

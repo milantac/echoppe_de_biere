@@ -118,6 +118,11 @@ if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] == 1)
                         }
                         $commentaire = htmlspecialchars($_POST['commentaire'][$id]);
                         $validation = isset($_POST['validation'][$id]) ? 1 : 0;
+                        // vérification pour la valeur de $validation
+                        if (!in_array($validation, [0, 1])) {
+                            echo "Valeur de validation invalide: $validation";
+                            exit();
+                        }
                     
                         if (!empty($commentaire)) {
                             // Préparation de la requête

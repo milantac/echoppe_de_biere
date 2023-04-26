@@ -36,18 +36,19 @@ if ($stmt->rowCount() > 0) {
                 <th>Nom</th>
                 <th>Photo</th>
                 <th>Degrés d'alcool</th>
-                <th>Quantité</th>
+                <th>cantenance</th>
                 <th>Description</th>
-                <th>En stock</th>
+                <th>stock</th>
                 <th>Couleur</th>
                 <th>Pays</th>
                 <th>Modifier</th>
+                <th>Supprimer</th>
               </tr>
             </thead>
             <tbody class="bg-echoppe">
               <?php
               while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $id_biere = $row['id_biere'];
+                $id_biere = $row['id'];
               ?>
                 <tr>
                   <td class="d-none"><?= $id_biere ?></td>
@@ -56,10 +57,11 @@ if ($stmt->rowCount() > 0) {
                   <td><?= $row['degres'] ?></td>
                   <td><?= $row['contenance'] ?> cl</td>
                   <td><?= $row['description'] ?></td> 
-                  <td><?= $row["stock"] ? "<span class='text-success'>Oui</span>" : "<span class='text-danger'>Non</span>" ?></td>
+                  <td><?= $row["stock"] ?></td>
                   <td><?= $row['couleur'] ?></td>
                   <td><?= $row['pays'] ?></td>
-                  <td><a href="index.php?page=form_modifier_biere&id=<?= $id_biere ?>" class="btn btn-primary">Modifier</a></td>
+                  <td><a href="index.php?page=form_modif&action=produit&&id=<?= $id_biere ?>" class="btn btn-primary">Modifier</a></td>
+                  <td><a href="index.php?page=supprimer&action=produit&id=<?= $id_biere ?>" class="btn btn-danger">Supprimer</a></td>
                 </tr>
                 <?php
               }
