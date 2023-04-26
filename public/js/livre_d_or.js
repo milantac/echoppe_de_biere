@@ -13,17 +13,17 @@ function validateForm() {
     // Vérification si tous les champs sont remplis
     if (nom.value === "" || prenom.value === "" || email.value === "" || tel.value === "" || commentaire.value === "") {
         errorMessages.push("Veuillez remplir tous les champs requis.");
-    }
-
-
-    // Expression régulière pour valider l'adresse e-mail
-    let emailRegEx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    // Vérification si l'adresse e-mail est valide
-    if (!emailRegEx.test(email.value)) {
-        errorMessages.push("Veuillez entrer une adresse e-mail valide.");
-        email.classList.add("border-danger");
+        nom.classList.toggle("border-danger", nom.value === "");
+        prenom.classList.toggle("border-danger", prenom.value === "");
+        email.classList.toggle("border-danger", email.value === "");
+        tel.classList.toggle("border-danger", tel.value === "");
+        commentaire.classList.toggle("border-danger", commentaire.value === "");
     } else {
+        nom.classList.remove("border-danger");
+        prenom.classList.remove("border-danger");
         email.classList.remove("border-danger");
+        tel.classList.remove("border-danger");
+        commentaire.classList.remove("border-danger");
     }
 
     // Expression régulière pour valider le numéro de téléphone

@@ -30,12 +30,3 @@
                 </ul>
             </section>
         </footer>
-    
-
-        <!-- <script src="../public/js/produit.js"></script> -->
-        <script src="../public/js/livre-d-or.js"></script>
-        <script src="../public/js/form_livre_d_or.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
-    
-</html>

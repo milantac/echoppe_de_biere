@@ -105,6 +105,7 @@ function prevEntries() {
     displayEntry(currentIndex, currentIndex + 1);
 }
 
+
 // Affiche les entrées initiales (index 0 et 1)
 displayEntry(currentIndex, currentIndex + 1);
 

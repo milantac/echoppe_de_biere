@@ -3,8 +3,6 @@
 include('./connexion-BDD.php');
 require_once(__DIR__ . '\../\function_Accueil_Json.php');
 
-
-echo($_SESSION['type_utilisateur']);
 // Vérifier si l'utilisateur est connecté en tant qu'administrateur
 if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] == 1) {
     
@@ -38,15 +36,14 @@ if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] == 1)
             case 'livre-d-or':
                 // Vérification de la validité des champs
                 if (
-                    empty($_POST['nom']) || empty($_POST['prenom']) || empty($_POST['email']) || empty($_POST['tel']) ||
-                    empty($_POST['accueil']) || empty($_POST['proprete']) || empty($_POST['qualite-produits']) || empty($_POST['commentaire'])
+                    empty($_POST['nom']) || empty($_POST['prenom']) || empty($_POST['email']) || empty($_POST['commentaire'])
                 ) {
                     header("Location: ../../public/index.php?page=livre-d-or&err=oblig");
                     exit();
                 } else {
-                    // Vérification si le numéro de téléphone existe déjà dans la table livre_d_or
-                    $stmt = $bdd->prepare("SELECT COUNT(*) FROM livre_d_or WHERE telephone = :tel");
-                    $stmt->execute(array(':tel' => $_POST['tel']));
+                    // Vérification si le nemail existe déjà dans la table livre_or_commentaire
+                    $stmt = $bdd->prepare("SELECT COUNT(*) FROM livre_d_or WHERE email = :mail");
+                    $stmt->execute(array(':mail' => $_POST['mail']));
                     $count = $stmt->fetchColumn();
                     if ($count > 0) {
                         header("Location: ../../public/index.php?page=livre-d-or&err=existe");
@@ -78,10 +75,6 @@ if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] == 1)
                     $nom = $_POST['nom'];
                     $prenom = $_POST['prenom'];
                     $email = $_POST['email'];
-                    $tel = $_POST['tel'];
-                    $accueil = $_POST['accueil'];
-                    $proprete = $_POST['proprete'];
-                    $qualite = $_POST['qualite-produits'];
                     $commentaire = $_POST['commentaire'];
 
                     // Exécution de la requête préparée
@@ -90,10 +83,6 @@ if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] == 1)
                             ':nom' => htmlspecialchars($nom),
                             ':prenom' => htmlspecialchars($prenom),
                             ':email' => htmlspecialchars($email),
-                            ':tel' => htmlspecialchars($tel),
-                            ':accueil' => htmlspecialchars($accueil),
-                            ':proprete' => htmlspecialchars($proprete),
-                            ':qualite' => htmlspecialchars($qualite),
                             ':commentaire' => htmlspecialchars($commentaire)
                         )
                     );
@@ -110,51 +99,60 @@ if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] == 1)
                 }
                 break;
 
-            case 'valid_com':
-                // Récupération des données du formulaire
-                $livre_d_or_admin = $_POST['livre_d_or'];
-
-                // Vérifier si des commentaires ont été saisis et si la case à cocher est cochée
-                $nb_commentaires_valides = 0;
-                foreach ($livre_d_or_admin as $resultat) {
-                    $id_livre_d_or = $resultat['id_livre_d_or'];
-                    $commentaire = $_POST['commentaire'][$id_livre_d_or];
-                    $validation = isset($_POST['validation_livre_d_or'][$id_livre_d_or]) ? 1 : 0;
-
-                    if (!empty($commentaire)) {
-                        // Préparation de la requête
-                        $stmt = $bdd->prepare(
-                            "UPDATE livre_d_or
-                        SET commentaire = :commentaire,
-                            validation_livre_d_or = :validation
-                        WHERE id_livre_d_or = :id"
-                        );
-
-                        // Exécution de la requête préparée
-                        $stmt->execute(
-                            array(
-                                ':id' => htmlspecialchars($id_livre_d_or),
-                                ':commentaire' => htmlspecialchars($commentaire),
-                                ':validation' => htmlspecialchars($validation)
-                            )
-                        );
-
-                        // Vérification de la mise à jour
-                        if ($stmt->rowCount() > 0) {
-                            $nb_commentaires_valides++;
+                case 'valid_com':
+                    // Vérification des données du formulaire
+                    if (!isset($_POST['livre_d_or']) || empty($_POST['livre_d_or'])) {
+                        echo "Veuillez saisir au moins un commentaire.";
+                        exit();
+                    }
+                    
+                    // Récupération des données du formulaire
+                    $livre_d_or_entries = $_POST['livre_d_or'];
+                    
+                    // Vérifier si des commentaires ont été saisis et si la case à cocher est cochée
+                    $nb_commentaires_valides = 0;
+                    foreach ($livre_d_or_entries as $entry) {
+                        $id = $entry['id'];
+                        if (!isset($_POST['commentaire'][$id])) {
+                            continue;
+                        }
+                        $commentaire = htmlspecialchars($_POST['commentaire'][$id]);
+                        $validation = isset($_POST['validation'][$id]) ? 1 : 0;
+                    
+                        if (!empty($commentaire)) {
+                            // Préparation de la requête
+                            $stmt = $bdd->prepare(
+                                "UPDATE livre_or_commentaires
+                                SET commentaire = :commentaire,
+                                    validation = :validation
+                                WHERE id = :id"
+                            );
+                    
+                            // Exécution de la requête préparée
+                            $stmt->execute(
+                                array(
+                                    ':id' => $id,
+                                    ':commentaire' => $commentaire,
+                                    ':validation' => $validation
+                                )
+                            );
+                    
+                            // Vérification de la mise à jour
+                            if ($stmt->rowCount() > 0) {
+                                $nb_commentaires_valides++;
+                            }
                         }
                     }
-                }
-
-                // Redirection vers la page d'accueil
-                if ($nb_commentaires_valides > 0) {
-                    header("Location: ../../public/index.php?page=livre-d-or&msg=succes");
-                    exit();
-                } else {
-                    // Affichage d'un message d'erreur
-                    echo "Veuillez saisir au moins un commentaire et cocher la case pour valider.";
-                }
-                break;
+                    
+                    // Redirection vers la page d'accueil
+                    if ($nb_commentaires_valides > 0) {
+                        header("Location: ../../public/index.php?page=livre-d-or&msg=succes");
+                        exit();
+                    } else {
+                        // Affichage d'un message d'erreur
+                        echo "Veuillez saisir au moins un commentaire et cocher la case pour valider.";
+                    }
+                    break;
 
             case 'new-biere':
                 // Si le formulaire a été soumis

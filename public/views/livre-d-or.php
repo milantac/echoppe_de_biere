@@ -1,9 +1,10 @@
 <?php
-// Récupération des données depuis la table livre_d_or
+// Récupération des données depuis la table livre_or_commentaires si elles ont été validées
 $stmt = $bdd->prepare(
-    "SELECT *
-     FROM livre_d_or
-     WHERE validation_livre_d_or = 1"
+    "SELECT `id`, `nom`, `prenom`, `email`, `date`, `commentaire`, `validation`
+     FROM `livre_or_commentaires`
+     WHERE `validation` = 1 
+     ORDER BY `date` DESC"
 );
 $stmt->execute();
 $livre_d_or_recup = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -22,7 +23,7 @@ if (isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] == 1) 
                             <th>Nom</th>
                             <th>Prénom</th>
                             <th>Email</th>
-                            <th>Téléphone</th>
+                            <th>Date</th>
                             <th>Commentaire</th>
                             <th>Validation</th>
                         </tr>
@@ -30,7 +31,12 @@ if (isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] == 1) 
                     <tbody class="bg-echoppe">
                         <?php
                         // Récupération des données depuis la table livre_d_or
-                        $stmt_admin = $bdd->prepare("SELECT * FROM livre_d_or");
+                        $stmt_admin = $bdd->prepare(
+                            "   SELECT `id`, `nom`, `prenom`, `email`, `date`, `commentaire`, `validation`
+                                FROM `livre_or_commentaires`
+                                ORDER BY `date` DESC
+                            "
+                        );
                         $stmt_admin->execute();
                         $livre_d_or_admin = $stmt_admin->fetchAll(PDO::FETCH_ASSOC);
 
@@ -41,18 +47,18 @@ if (isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] == 1) 
                                 <td><?= $resultat['nom'] ?></td>
                                 <td><?= $resultat['prenom'] ?></td>
                                 <td><?= $resultat['email'] ?></td>
-                                <td><?= $resultat['telephone'] ?></td>
+                                <td><?= date('d/m/Y H:i', strtotime($resultat['date'])) ?></td>
                                 <td class="form-floating">
-                                    <textarea class="form-control" name="commentaire[<?= $resultat['id_livre_d_or'] ?>]" placeholder="Leave a comment here" id="commentaire_<?= $resultat['id_livre_d_or'] ?>" rows="10" cols="100"><?= $resultat['commentaire'] ?></textarea>
+                                    <textarea class="form-control" name="commentaire[<?= $resultat['id'] ?>]" placeholder="Leave a comment here" id="commentaire_<?= $resultat['id'] ?>" rows="10" cols="100"><?= $resultat['commentaire'] ?></textarea>
                                     <label for="commentaire">Commentaire</label>
                                 </td>
                                 <td>
                                     <label class="switch">
-                                        <input type="checkbox" name="validation_livre_d_or[<?= $resultat['id_livre_d_or'] ?>]" value="<?= $resultat['id_livre_d_or'] ?>" <?= $resultat['validation_livre_d_or'] == 1 ? 'checked' : '' ?> />
+                                    <input type="checkbox" name="validation[<?= $resultat['id'] ?>]" value="<?= $resultat['id'] ?>" <?= $resultat['validation'] == 1 ? 'checked' : '' ?> />
                                         <span></span>
                                     </label>
                                 </td>
-                                <input type="hidden" name="livre_d_or[<?= $resultat['id_livre_d_or'] ?>][id_livre_d_or]" value="<?= $resultat['id_livre_d_or'] ?>" />
+                                <input type="hidden" name="livre_d_or[<?= $resultat['id'] ?>][id]" value="<?= $resultat['id'] ?>" />
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -64,7 +70,7 @@ if (isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] == 1) 
 <?php
 } else {
 ?>
-    <article class="container">
+        <article class="container">
         <article class="row justify-content-center mx-3" id="livre-d-or">
             <script>
                 const livre_d_or_recup = <?php echo json_encode($livre_d_or_recup); ?>;
@@ -78,7 +84,6 @@ if (isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] == 1) 
                 </li>
             </ul>
         </article>
-    </article>
 
     <!-- Formulaire de livre d'or -->
     <article class="container my-2">
@@ -122,10 +127,6 @@ if (isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] == 1) 
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-3 col-xxl-3 my-2">
                         <label for="email" class="form-label fw-bold">E-mail</label>
                         <input type="email" class="form-control" id="email" name="email" placeholder="Entrez votre adresse e-mail" required>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-3 col-xxl-3 my-2">
-                        <label for="tel" class="form-label fw-bold">Numéro de téléphone</label>
-                        <input type="tel" class="form-control" id="tel" name="tel" placeholder="Entrez votre numéro de téléphone" required>
                     </div>
                 </div>
                 <!-- Zone de texte pour le commentaire -->

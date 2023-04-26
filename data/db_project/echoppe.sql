@@ -73,10 +73,12 @@ INSERT INTO `etat_panier` (`id`, `nom`) VALUES
 
 CREATE TABLE `livre_or_commentaires` (
   `id` int NOT NULL,
-  `id_users` int DEFAULT NULL,
+  `nom` VARCHAR(255) NOT NULL,
+  `prenom` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
   `date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `commentaire` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'NULL',
-  `validation` bit(1) DEFAULT b'0'
+  `validation` bit(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -414,8 +416,7 @@ ALTER TABLE `etat_panier`
 -- Index pour la table `livre_or_commentaires`
 --
 ALTER TABLE `livre_or_commentaires`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_users` (`id_users`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `origines`
