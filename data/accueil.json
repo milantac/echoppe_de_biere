@@ -11,7 +11,7 @@
             "id_horaire_ouverture": 1,
             "jour": "Lundi",
             "horaire_matin": "Fermé",
-            "horaire_apres_midi": "13:00 - 20:00"
+            "horaire_apres_midi": "fermer"
         },
         "2": {
             "id_horaire_ouverture": 2,

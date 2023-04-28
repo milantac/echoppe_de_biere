@@ -168,58 +168,74 @@ if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] == 1)
                     $degres_d_alcool = htmlspecialchars(trim($_POST['degres_d_alcool']));
                     $quantite = htmlspecialchars(trim($_POST['quantite']));
                     $description = htmlspecialchars(trim($_POST['description']));
-                    $en_stock = isset($_POST['en_stock']) ? 1 : 0;
+                    $en_stock = isset($_POST['en_stock']);
                     $id_type_de_biere = htmlspecialchars(trim($_POST['id_type_de_biere']));
                     $id_origine = htmlspecialchars(trim($_POST['id_origine']));
 
                     // Gestion de l'upload de l'image
                     //upload du fichier s'il y en a un 
                     if (isset($_FILES['photo']) && !empty($_FILES["photo"]["name"])) {
-                        //Dossier dans lequel va être déposé le fichier
+                        // Dossier dans lequel va être déposé le fichier
                         $dossier = '../../public/images/produits/';
-                        //On fixe la taille max acceptée
+                        // On fixe la taille max acceptée
                         $taille_max = 1000000;
-                        //On fixe la liste des extensions acceptées
+                        // On fixe la liste des extensions acceptées
                         $extensions = array('.png', '.jpg', '.jpeg', '.gif', '.webp');
-
-                        //Récupération du nom du fichier 
+                        // Liste des types MIME autorisés
+                        $allowed_mime_types = array('image/png', 'image/jpeg', 'image/gif', 'image/webp');
+                    
+                        // Récupération du nom du fichier
                         $photo = basename($_FILES['photo']['name']);
-
-                        //Récupération de la taille du fichier
+                    
+                        // Récupération de la taille du fichier
                         $taille = filesize($_FILES['photo']['tmp_name']);
-
-                        //Récupération de l'extension du fichier
-                        $extension = strchr($_FILES['photo']['name'], '.');
-
-                        //Vérification si extension acceptée
+                    
+                        // Récupération de l'extension du fichier
+                        $extension = strtolower(strrchr($_FILES['photo']['name'], '.'));
+                    
+                        // Récupération du type MIME du fichier
+                        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                        $mime_type = finfo_file($finfo, $_FILES['photo']['tmp_name']);
+                        finfo_close($finfo);
+                    
+                        // Vérification si extension acceptée
                         if (!in_array($extension, $extensions)) {
-                            // header("location:../index.php?page=form_ex&action=ajout&retour=ext");
+                            header("location:../index.php?page=form_ajout_biere&retour=ext");
                             exit;
                         }
-
-                        //Vérification taille du fichier < max
+                    
+                        // Vérification si le type MIME est autorisé
+                        if (!in_array($mime_type, $allowed_mime_types)) {
+                            header("location:../index.php?page=form_ajout_biere&retour=mime");
+                            exit;
+                        }
+                    
+                        // Vérification taille du fichier < max
                         if ($taille > $taille_max) {
                             header("location:../index.php?page=form_ajout_biere&retour=taille");
                             exit;
                         }
-
-                        //Vérification qu'aucun caratère etrange n'est dans le fichier 
+                    
+                        // Renommez le fichier téléchargé en utilisant un nom aléatoire unique
+                        $new_filename = uniqid() . $extension;
+                        $destination = $dossier . $new_filename;
+                    
+                        // Vérification qu'aucun caractère étrange n'est dans le fichier
                         if (!isset($erreur)) {
-                            $photo = preg_replace('/([^.a-z0-9]+)/i', '_', $photo);
-
-                            //Upload du fichier
-                            move_uploaded_file($_FILES['photo']['tmp_name'], $dossier . $photo);
+                            // Upload du fichier
+                            move_uploaded_file($_FILES['photo']['tmp_name'], $destination);
+                            $photo = $new_filename;
                         }
                     } else {
-                        //Pas de nouveau fichier, on récupère l'ancien
+                        // Pas de nouveau fichier, on récupère l'ancien
                         $photo = "defaut.png";
                     }
 
                     // Requête préparée pour insérer la bière dans la base de données
-                    $stmt = $bdd->prepare("INSERT INTO biere (nom_biere, photo, degres_d_alcool, quantite, description, en_stock, id_type_de_biere, id_origine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt = $bdd->prepare("INSERT INTO produits (nom, degres, stock, description, id_categories, id_origines, contenance, img) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
                     // Exécution de la requête avec les données du formulaire
-                    $stmt->execute(array($nom_biere, $photo, $degres_d_alcool, $quantite, $description, $en_stock, $id_type_de_biere, $id_origine));
+                    $stmt->execute(array($nom_biere, $degres_d_alcool, $quantite, $description, $id_type_de_biere, $id_origine, NULL, $photo));
 
                     // Redirection vers une autre page ou affichage d'un message de succès
                     header('Location: ../../public/index.php?page=produits&msg=success');
