@@ -130,47 +130,107 @@ if (!isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] != 1)
                 break;
 
             case 'produit':
+                // Récupérez l'ID de la bière depuis l'URL
+                $id_biere = $_GET['id'];
+                // récupérer les informations de la bière de la base de données
+                $stmt = $bdd->prepare("SELECT * FROM produits WHERE id = :id_biere");
+                $stmt->execute([':id_biere' => $id_biere]);
+                $biere = $stmt->fetch(PDO::FETCH_ASSOC);
             ?>
-                <article class="container cadre_noir m-4 p-3 bg-light">
-                    <h1 class='text-center'>Modifier un produit</h1>
-                    <form action="votre_script_de_traitement.php" method="post">
-                        <input type="hidden" name="id" id="id" value="">
-                        <div class="row mx-2">
-                            <label for="nom">Nom:</label>
-                            <input type="text" name="nom" id="nom" maxlength="48" required>
-
-                            <label for="degres">Degrés:</label>
-                            <input type="number" name="degres" id="degres" step="1" min="0" required>
-
-                            <label for="stock">Stock:</label>
-                            <input type="number" name="stock" id="stock" min="0" required>
-
+                <div class="row my-2 justify-content-center">
+                    <h2 class="col-10 cadre_bois bg-light text-center py-4">Modification de la bière <?= $biere["nom"] ?></h2>
+                </div>
+                <div class="row justify-content-center mb-2">
+                    <form action="../models/script_php/ajout.php?action=update-biere" method="post" enctype="multipart/form-data" class="col-10 cadre_noir bg-biere">
+                        <!-- Ajouter un champ caché pour stocker le jeton CSRF -->
+                        <!-- <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>"> -->
+                        <div class="row mt-5">
+                            <!-- <label for="id_biere">ID Bière:</label> -->
+                            <input type="text" name="nom_biere" id="nom_biere" class="form-control" placeholder="nom de la bière" aria-label="nom de la bière" aria-describedby="nom de la bière" value="<?= htmlspecialchars($biere['id']) ?>" required hidden>
+                            <div class="col-4">
+                                <!-- Nom Bière: -->
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text bg-echoppe fw-bold">Nom Bière:</span>
+                                    <input type="text" name="nom_biere" id="nom_biere" class="form-control" placeholder="nom de la bière" aria-label="nom de la bière" aria-describedby="nom de la bière" value="<?= htmlspecialchars($biere['nom']) ?>" required>
+                                </div>
+                            </div>
+                            <!-- Degrés d'alcool: -->
+                            <div class="col-3">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text bg-echoppe fw-bold">Degrés d'alcool:</span>
+                                    <input type="number" name="degres_d_alcool" id="degres_d_alcool" class="form-control" step="0.1" value="<?= htmlspecialchars($biere['degres']) ?>" required>
+                                </div>
+                            </div>
+                            <!-- Contenance (en cl): -->
+                            <div class='col-3'>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text bg-echoppe fw-bold">Contenance (en cl):</span>
+                                    <input type="number" name="quantite" id="quantite" class="form-control" step="0.5" value="<?= htmlspecialchars($biere['contenance']) ?>" required>
+                                </div>
+                            </div>
+                            <!-- Stock: -->
+                            <div class="col-2">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text bg-echoppe fw-bold">Stock:</span>
+                                    <input type="number" name="stock" id="stock" class="form-control" step="1" value="<?= htmlspecialchars($biere['stock']) ?>" required>
+                                </div>
+                            </div>
+                            <!-- Description: -->
+                            <div class="col-12">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text bg-echoppe fw-bold">Description:</span>
+                                    <textarea name="description" id="description" class="form-control" aria-label="Description" required><?= htmlspecialchars($biere['description']) ?></textarea>
+                                </div>
+                            </div>
+                            <!-- Type de bière: -->
+                            <div class="col-6">
+                                <div class="input-group mb-3">
+                                    <label for="id_type_de_biere" class="input-group-text bg-echoppe fw-bold">Type de bière:</label>
+                                    <select name="id_type_de_biere" id="id_type_de_biere" class="form-select" required>
+                                        <?php
+                                        $stmt = $bdd->prepare("SELECT id, nom FROM categories");
+                                        $stmt->execute();
+                                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                            $selected = ($row['id'] == $biere['id_categories']) ? "selected" : "";
+                                            echo "<option value='{$row['id']}' {$selected}>{$row['nom']}</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- Origine: -->
+                            <div class="col-6">
+                                <div class="input-group mb-3">
+                                    <label for="id_origine" class="input-group-text bg-echoppe fw-bold">Origine:</label>
+                                    <select name="id_origine" id="id_origine" class="form-select" required>
+                                        <?php
+                                        $stmt = $bdd->prepare("SELECT id, nom FROM origines");
+                                        $stmt->execute();
+                                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                            $selected = ($row['id'] == $biere['id_origines']) ? "selected" : "";
+                                            echo "<option value='{$row['id']}' {$selected}>{$row['nom']}</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- Image -->
+                            <div class="col-12">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text bg-echoppe fw-bold">Photo actuelle:</span>
+                                    <img src="./images/produits/<?= htmlspecialchars($biere['img']) ?>" alt="<?= htmlspecialchars($biere['nom']) ?>" class="img-thumbnail">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text bg-echoppe fw-bold">Nouvelle photo:</span>
+                                    <input type="file" name="photo" id="photo" class="form-control" placeholder="photo de la bière" aria-label="photo de la bière" aria-describedby="photo de la bière">
+                                </div>
+                            </div>
                         </div>
-                        <label for="description">Description:</label>
-                        <textarea name="description" id="description" maxlength="256"></textarea>
-                        <br>
-
-                        <label for="id_categories">Catégorie:</label>
-                        <input type="number" name="id_categories" id="id_categories">
-                        <br>
-
-                        <label for="id_origines">Origine:</label>
-                        <input type="number" name="id_origines" id="id_origines">
-                        <br>
-
-                        <label for="contenance">Contenance:</label>
-                        <input type="number" name="contenance" id="contenance">
-                        <br>
-
-                        <label for="img">Image:</label>
-                        <input type="text" name="img" id="img" maxlength="64">
-                        <br>
-
-                        <button type="submit" class="btn btn-primary">Modifier le produit</button>
+                        <div class="row my-5 justify-content-center">
+                            <input type="submit" class="col-2 btn btn-success" value="Ajouter">
+                        </div>
                     </form>
-                </article>
-
-
+                </div>
 <?php
                 break;
         }

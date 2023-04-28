@@ -168,7 +168,7 @@ if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] == 1)
                     $degres_d_alcool = htmlspecialchars(trim($_POST['degres_d_alcool']));
                     $quantite = htmlspecialchars(trim($_POST['quantite']));
                     $description = htmlspecialchars(trim($_POST['description']));
-                    $en_stock = isset($_POST['en_stock']);
+                    $stock = isset($_POST['stock']);
                     $id_type_de_biere = htmlspecialchars(trim($_POST['id_type_de_biere']));
                     $id_origine = htmlspecialchars(trim($_POST['id_origine']));
 
@@ -235,7 +235,7 @@ if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] == 1)
                     $stmt = $bdd->prepare("INSERT INTO produits (nom, degres, stock, description, id_categories, id_origines, contenance, img) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
                     // Exécution de la requête avec les données du formulaire
-                    $stmt->execute(array($nom_biere, $degres_d_alcool, $quantite, $description, $id_type_de_biere, $id_origine, NULL, $photo));
+                    $stmt->execute(array($nom_biere, $degres_d_alcool, $quantite, $description, $id_type_de_biere, $id_origine, $stock, $photo));
 
                     // Redirection vers une autre page ou affichage d'un message de succès
                     header('Location: ../../public/index.php?page=produits&msg=success');
@@ -243,6 +243,67 @@ if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] == 1)
                 }
                 break;
 
+                case 'update-biere':
+                    $id_biere = htmlspecialchars($_POST['id_biere']);
+                    $nom_biere = htmlspecialchars($_POST['nom_biere']);
+                    $degres_d_alcool = htmlspecialchars($_POST['degres_d_alcool']);
+                    $quantite = htmlspecialchars($_POST['quantite']);
+                    $stock = htmlspecialchars($_POST['stock']);
+                    $description = htmlspecialchars($_POST['description']);
+                    $id_type_de_biere = htmlspecialchars($_POST['id_type_de_biere']);
+                    $id_origine = htmlspecialchars($_POST['id_origine']);
+                
+                    // Gestion de l'image
+                    $image = $_FILES['photo'];
+                    $image_name = null;
+                
+                    if ($image['size'] > 0) {
+                        $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
+                        $image_extension = pathinfo($image['name'], PATHINFO_EXTENSION);
+                
+                        if (in_array($image_extension, $allowed_extensions)) {
+                            $image_name = uniqid() . '.' . $image_extension;
+                            $upload_path = '../images/produits/' . $image_name;
+                            move_uploaded_file($image['tmp_name'], $upload_path);
+                        } else {
+                            // Gérer l'erreur d'extension non autorisée
+                            $_SESSION['error_message'] = "Extension de fichier non autorisée. Les extensions autorisées sont : " . implode(', ', $allowed_extensions);
+                            header('Location: ../views/produits.php');
+                            exit;
+                        }
+                    }
+                
+                    $update_query = "UPDATE produits SET nom = :nom_biere, degres = :degres_d_alcool, contenance = :quantite, stock = :stock, description = :description, id_categories = :id_type_de_biere, id_origines = :id_origine";
+                
+                    if ($image_name !== null) {
+                        $update_query .= ", img = :image_name";
+                    }
+                
+                    $update_query .= " WHERE id = :id_biere";
+                
+                    $stmt = $bdd->prepare($update_query);
+                
+                    $params = [
+                        ':nom_biere' => $nom_biere,
+                        ':degres_d_alcool' => $degres_d_alcool,
+                        ':quantite' => $quantite,
+                        ':stock' => $stock,
+                        ':description' => $description,
+                        ':id_type_de_biere' => $id_type_de_biere,
+                        ':id_origine' => $id_origine,
+                        ':id_biere' => $id_biere,
+                    ];
+                
+                    if ($image_name !== null) {
+                        $params[':image_name'] = $image_name;
+                    }
+                
+                    $stmt->execute($params);
+                
+                    // Rediriger vers la page de gestion des produits ou la page d'accueil
+                    header('Location: ../../public/index.php?page=produits&msg=success');
+                
+                    break;
             default:
                 // Rediriger vers la page 404 si l'action n'est pas reconnue
                 header("Location:../../public/index.php?page=404");
