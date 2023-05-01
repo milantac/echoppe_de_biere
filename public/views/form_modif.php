@@ -146,7 +146,7 @@ if (!isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] != 1)
                         <!-- <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>"> -->
                         <div class="row mt-5">
                             <!-- <label for="id_biere">ID Bière:</label> -->
-                            <input type="text" name="nom_biere" id="nom_biere" class="form-control" placeholder="nom de la bière" aria-label="nom de la bière" aria-describedby="nom de la bière" value="<?= htmlspecialchars($biere['id']) ?>" required hidden>
+                            <input type="text" name="id_biere" id="id_biere" class="form-control" placeholder="id de la bière" aria-label="nom de la bière" aria-describedby="nom de la bière" value="<?= htmlspecialchars($biere['id']) ?>" required hidden>
                             <div class="col-4">
                                 <!-- Nom Bière: -->
                                 <div class="input-group mb-3">

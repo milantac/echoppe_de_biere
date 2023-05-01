@@ -60,8 +60,8 @@ if ($stmt->rowCount() > 0) {
                   <td><?= $row["stock"] ?></td>
                   <td><?= $row['couleur'] ?></td>
                   <td><?= $row['pays'] ?></td>
-                  <td><a href="index.php?page=form_modif&action=produit&&id=<?= $id_biere ?>" class="btn btn-primary">Modifier</a></td>
-                  <td><a href="index.php?page=supprimer&action=produit&id=<?= $id_biere ?>" class="btn btn-danger">Supprimer</a></td>
+                  <td><a href="index.php?page=form_modif&action=produit&id=<?= $id_biere ?>" class="btn btn-primary">Modifier</a></td>
+                  <td><a href="../models/script_php/supprimer.php?id=<?=  $id_biere ?>" class="btn btn-danger">Supprimer</a></td>
                 </tr>
                 <?php
               }
