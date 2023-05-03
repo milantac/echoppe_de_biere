@@ -133,7 +133,7 @@ if (!isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] != 1)
                 // Récupérez l'ID de la bière depuis l'URL
                 $id_biere = $_GET['id'];
                 // récupérer les informations de la bière de la base de données
-                $stmt = $bdd->prepare("SELECT * FROM produits WHERE id = :id_biere");
+                $stmt = $bdd->prepare("SELECT `id`, `nom`, `degres`, `stock`, `description`, `id_categories`, `id_origines`, `contenance`, `img`, `prix` FROM produits WHERE id = :id_biere");
                 $stmt->execute([':id_biere' => $id_biere]);
                 $biere = $stmt->fetch(PDO::FETCH_ASSOC);
             ?>
@@ -147,32 +147,39 @@ if (!isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] != 1)
                         <div class="row mt-5">
                             <!-- <label for="id_biere">ID Bière:</label> -->
                             <input type="text" name="id_biere" id="id_biere" class="form-control" placeholder="id de la bière" aria-label="nom de la bière" aria-describedby="nom de la bière" value="<?= htmlspecialchars($biere['id']) ?>" required hidden>
-                            <div class="col-4">
-                                <!-- Nom Bière: -->
+                            <!-- Nom Bière: -->
+                            <div class="col-6">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text bg-echoppe fw-bold">Nom Bière:</span>
                                     <input type="text" name="nom_biere" id="nom_biere" class="form-control" placeholder="nom de la bière" aria-label="nom de la bière" aria-describedby="nom de la bière" value="<?= htmlspecialchars($biere['nom']) ?>" required>
                                 </div>
                             </div>
                             <!-- Degrés d'alcool: -->
-                            <div class="col-3">
+                            <div class="col-6">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text bg-echoppe fw-bold">Degrés d'alcool:</span>
                                     <input type="number" name="degres_d_alcool" id="degres_d_alcool" class="form-control" step="0.1" value="<?= htmlspecialchars($biere['degres']) ?>" required>
                                 </div>
                             </div>
                             <!-- Contenance (en cl): -->
-                            <div class='col-3'>
+                            <div class='col-4'>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text bg-echoppe fw-bold">Contenance (en cl):</span>
                                     <input type="number" name="quantite" id="quantite" class="form-control" step="0.5" value="<?= htmlspecialchars($biere['contenance']) ?>" required>
                                 </div>
                             </div>
                             <!-- Stock: -->
-                            <div class="col-2">
+                            <div class="col-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text bg-echoppe fw-bold">Stock:</span>
                                     <input type="number" name="stock" id="stock" class="form-control" step="1" value="<?= htmlspecialchars($biere['stock']) ?>" required>
+                                </div>
+                            </div>
+                            <!-- Prix: -->
+                            <div class="col-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text bg-echoppe fw-bold">Prix:</span>
+                                    <input type="number" name="prix" id="prix" class="form-control" step="0.01" value="<?= htmlspecialchars($biere['prix']) ?>" required>
                                 </div>
                             </div>
                             <!-- Description: -->

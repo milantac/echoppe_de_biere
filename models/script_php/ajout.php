@@ -149,19 +149,17 @@ if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] == 1)
                     // Redirection vers la page d'accueil
                     if ($nb_commentaires_valides > 0) {
                         header("Location: ../../public/index.php?page=livre-d-or&msg=succes");
-                        exit;
+                        break;
                     } else {
                         // Affichage d'un message d'erreur
                         echo "Veuillez saisir au moins un commentaire et cocher la case pour valider.";
-                        exit;
+                        break;
                     }
                 }
 
-                break;
-
             case 'new-biere':
                 // Si le formulaire a été soumis
-                if (isset($_POST['nom_biere']) && isset($_POST['degres_d_alcool']) && isset($_POST['quantite']) && isset($_POST['description']) && isset($_POST['id_type_de_biere']) && isset($_POST['id_origine']) && isset($_FILES['photo']) && isset($_POST['stock'])) {
+                if (isset($_POST['nom_biere']) && isset($_POST['degres_d_alcool']) && isset($_POST['quantite']) && isset($_POST['description']) && isset($_POST['id_type_de_biere']) && isset($_POST['id_origine']) && isset($_FILES['photo']) && isset($_POST['stock']) && isset($_POST['prix'])) {
 
                     // Récupération des données du formulaire
                     $nom_biere = htmlspecialchars($_POST['nom_biere']);
@@ -171,6 +169,8 @@ if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] == 1)
                     $stock = htmlspecialchars($_POST['stock']);
                     $id_type_de_biere = htmlspecialchars($_POST['id_type_de_biere']);
                     $id_origine = htmlspecialchars($_POST['id_origine']);
+                    $prix = htmlspecialchars($_POST['prix']);
+
 
                     // Gestion de l'upload de l'image
                     //upload du fichier s'il y en a un 
@@ -233,13 +233,14 @@ if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] == 1)
                         }
 
                         // Requête préparée pour insérer la bière dans la base de données
-                        $stmt = $bdd->prepare("INSERT INTO produits (nom, degres, stock, description, id_categories, id_origines, contenance, img) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                        $stmt = $bdd->prepare("INSERT INTO produits (nom, degres, stock, description, id_categories, id_origines, contenance, img, prix) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
                         // Exécution de la requête avec les données du formulaire
-                        $stmt->execute(array($nom_biere, $degres_d_alcool, $quantite, $description, $id_type_de_biere, $id_origine, $stock, $photo));
+                        // Exécution de la requête avec les données du formulaire
+                        $stmt->execute(array($nom_biere, $degres_d_alcool, $quantite, $description, $id_type_de_biere, $id_origine, $stock, $photo, $prix));
 
                         // Redirection vers une autre page ou affichage d'un message de succès
-                        header('Location: ../../public/index.php?page=produits&msg=success');
+                        header('Location: ../../public/index.php?page=produits&msg=ajout_success');
                         exit;
                     }
                 }
@@ -258,6 +259,7 @@ if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] == 1)
                     $description = htmlspecialchars($_POST['description']);
                     $id_type_de_biere = htmlspecialchars($_POST['id_type_de_biere']);
                     $id_origine = htmlspecialchars($_POST['id_origine']);
+                    $prix = htmlspecialchars($_POST['prix']);
 
                     // Gestion de l'image
                     $image = $_FILES['photo'];
@@ -298,16 +300,17 @@ if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] == 1)
                     }
 
                     // Préparer et exécuter la requête de mise à jour
-                    $update_query = "   UPDATE `produits` 
-                                        SET `nom` = :nom_biere,
-                                            `degres` = :degres_d_alcool, 
-                                            `stock` = :stock, 
-                                            `description` = :description, 
-                                            `id_categories` = :id_type_de_biere,
-                                            `id_origines` = :id_origine, 
-                                            `contenance` = :quantite".($image_name !== null ? ", img = :image_name" : "") . "
-                                        WHERE `id` = :id_biere
-                        ";
+                    $update_query = "   UPDATE  `produits` 
+                                        SET     `nom` = :nom_biere,
+                                                `degres` = :degres_d_alcool, 
+                                                `stock` = :stock, 
+                                                `description` = :description, 
+                                                `id_categories` = :id_type_de_biere,
+                                                `id_origines` = :id_origine, 
+                                                `contenance` = :quantite, 
+                                                `prix` = :prix" . ($image_name !== null ? ", `img` = :image_name" : "") . "
+                                                WHERE   `id` = :id_biere
+                                ";
 
                     $stmt = $bdd->prepare($update_query);
 
@@ -321,7 +324,8 @@ if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] == 1)
                         ':description' => $description,
                         ':id_type_de_biere' => $id_type_de_biere,
                         ':id_origine' => $id_origine,
-                    ];
+                        ':prix' => $prix,
+        ];
 
                     // Si une nouvelle image a été téléchargée, ajouter le nom de l'image aux paramètres
                     if ($image_name !== null) {

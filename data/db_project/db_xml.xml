@@ -34,7 +34,7 @@
 			<type label="SET" length="1" sql="SET" quote=""/>
 			<type label="Bit" length="0" sql="bit" quote=""/>
 		</group>
-	</datatypes><table x="323" y="331" name="produits">
+	</datatypes><table x="229" y="44" name="produits">
 <row name="id" null="0" autoincrement="1">
 <datatype>INTEGER</datatype>
 </row>
@@ -52,11 +52,11 @@
 <default>NULL</default></row>
 <row name="id_categorie" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<relation table="categories" row="id" />
+<default>NULL</default><relation table="categories" row="id" />
 </row>
 <row name="id_origines" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<relation table="origines" row="id" />
+<default>NULL</default><relation table="origines" row="id" />
 </row>
 <row name="contenance" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
@@ -64,11 +64,14 @@
 <row name="img" null="1" autoincrement="0">
 <datatype>VARCHAR(64)</datatype>
 <default>NULL</default></row>
+<row name="prix" null="0" autoincrement="0">
+<datatype>DECIMAL(10,2)</datatype>
+</row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="551" y="49" name="paniers">
+<table x="789" y="20" name="paniers">
 <row name="id" null="0" autoincrement="1">
 <datatype>INTEGER</datatype>
 </row>
@@ -77,17 +80,17 @@
 <default>'timestamp'</default></row>
 <row name="id_user" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<relation table="users" row="id" />
+<default>NULL</default><relation table="users" row="id" />
 </row>
 <row name="id_etat_panier" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<relation table="etat_panier" row="id" />
+<default>NULL</default><relation table="etat_panier" row="id" />
 </row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="654" y="429" name="categories">
+<table x="472" y="159" name="categories">
 <row name="id" null="0" autoincrement="1">
 <datatype>INTEGER</datatype>
 </row>
@@ -98,7 +101,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="832" y="91" name="users">
+<table x="1076" y="66" name="users">
 <row name="id" null="0" autoincrement="1">
 <datatype>INTEGER</datatype>
 </row>
@@ -121,7 +124,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="559" y="291" name="etat_panier">
+<table x="797" y="176" name="etat_panier">
 <row name="id" null="0" autoincrement="1">
 <datatype>INTEGER</datatype>
 </row>
@@ -132,13 +135,13 @@
 <part>id</part>
 </key>
 </table>
-<table x="1105" y="265" name="livre_or_commentaires">
+<table x="1346" y="41" name="livre_or_commentaires">
 <row name="id" null="0" autoincrement="1">
 <datatype>INTEGER</datatype>
 </row>
 <row name="id_users" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<relation table="users" row="id" />
+<default>NULL</default><relation table="users" row="id" />
 </row>
 <row name="date" null="1" autoincrement="0">
 <datatype>DATETIME</datatype>
@@ -153,7 +156,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="150" y="483" name="origines">
+<table x="38" y="182" name="origines">
 <row name="id" null="0" autoincrement="1">
 <datatype>INTEGER</datatype>
 </row>
@@ -164,17 +167,17 @@
 <part>id</part>
 </key>
 </table>
-<table x="312" y="38" name="panier_produits">
+<table x="550" y="0" name="panier_produits">
 <row name="quantite" null="0" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>1</default></row>
 <row name="id_paniers" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<relation table="paniers" row="id" />
+<default>NULL</default><relation table="paniers" row="id" />
 </row>
 <row name="id_produit" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<relation table="produits" row="id" />
+<default>NULL</default><relation table="produits" row="id" />
 </row>
 <key type="PRIMARY" name="">
 <part>quantite</part>

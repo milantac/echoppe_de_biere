@@ -12,7 +12,7 @@
 </div>
 <?php
 // Préparation de la requête SQL
-$sql = "SELECT produits.id, produits.nom AS nom_biere, produits.img AS photo, produits.degres, produits.contenance, produits.description, produits.stock, categories.nom AS couleur, origines.nom AS pays
+$sql = "SELECT produits.id, produits.nom AS nom_biere, produits.img AS photo, produits.degres, produits.contenance, produits.prix, produits.description, produits.stock, categories.nom AS couleur, origines.nom AS pays
         FROM produits
         JOIN categories ON produits.id_categories = categories.id
         JOIN origines ON produits.id_origines = origines.id";
@@ -36,7 +36,8 @@ if ($stmt->rowCount() > 0) {
                 <th>Nom</th>
                 <th>Photo</th>
                 <th>Degrés d'alcool</th>
-                <th>cantenance</th>
+                <th>Contenance</th>
+                <th>Prix</th>
                 <th>Description</th>
                 <th>stock</th>
                 <th>Couleur</th>
@@ -56,6 +57,7 @@ if ($stmt->rowCount() > 0) {
                   <td><img src='./images/produits/<?= $row['photo'] ?>' class='img-fluid rounded-start w-100' alt='<?= $row['photo'] ?>'></td>
                   <td><?= $row['degres'] ?></td>
                   <td><?= $row['contenance'] ?> cl</td>
+                  <td><?= $row['prix'] ?></td>
                   <td><?= $row['description'] ?></td> 
                   <td><?= $row["stock"] ?></td>
                   <td><?= $row['couleur'] ?></td>
@@ -102,6 +104,8 @@ if ($stmt->rowCount() > 0) {
                       En stock: <?= ($row["stock"]>0 ? "<span class='text-success'>Oui</span>" : "<span class='text-danger'>Non</span>") ?>
                       <br>
                       Stock disponible: <?= $row["stock"] ?>
+                      <br>
+                      Prix: <?= $row["prix"] ?>
                     </p>
 
                   </div>

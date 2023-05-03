@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : ven. 28 avr. 2023 à 14:35
+-- Généré le : mer. 03 mai 2023 à 14:34
 -- Version du serveur : 8.0.32
 -- Version de PHP : 8.2.4
 
@@ -359,26 +359,27 @@ CREATE TABLE `panier_produits` (
 
 CREATE TABLE `produits` (
   `id` int NOT NULL,
-  `nom` varchar(48) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '""',
-  `degres` decimal(10,0) NOT NULL DEFAULT '0',
+  `nom` varchar(48) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '""',
+  `degres` decimal(10,2) NOT NULL DEFAULT '0.00',
   `stock` int NOT NULL DEFAULT '0',
-  `description` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `id_categories` int DEFAULT NULL,
   `id_origines` int DEFAULT NULL,
   `contenance` int DEFAULT NULL,
-  `img` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
+  `img` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `prix` decimal(10,2) NOT NULL DEFAULT '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `produits`
 --
 
-INSERT INTO `produits` (`id`, `nom`, `degres`, `stock`, `description`, `id_categories`, `id_origines`, `contenance`, `img`) VALUES
-(1, 'Kwak Rouge', '8', 1, 'Cette Kwak Rouge se veut fidèle à la qualité et à l\'authenticité de la brasserie. Elle se révèle à travers une belle robe rouge surmontée d\'une fine couche de mousse. Au nez, on y découvre des arômes de fruits rouges, de cerise. En bouche, elle se révèle p', 6, 3, 33, '644bc998db97e.webp'),
-(2, 'ERDINGER DUNKEL', '5', 1, 'Cette bière brune est coiffée d\'une mousse épaisse et brillante de couleur crème. Au nez, on peut relever des arômes torréfiés, de chocolat noir ainsi que d\'arômes légèrement fruités. Enfin en bouche, on retrouve des notes de pain de campagne frais, un sub', 4, 2, 50, 'erdinger_dunkel_50cl.webp'),
-(3, 'VAL DIEU GRAND CRU', '11', 1, 'Les bières brassées au sein même de l’Abbaye du Val-Dieu sont inspirées des recettes originales des moines de la communauté chrétienne installée ici depuis 1216. Les siècles d’expérience donnent aujourd’hui naissance à des bières sophistiquées et toujours ', 4, 3, 33, 'VAL_DIEU_GRAND_CRU_33_CL.webp'),
-(4, 'PIÑA COLADA WHEAT', '5', 0, 'Sa robe blonde très pâle et trouble se couvre d&#039;une fine mousse blanche très fugace. Une fois le nez plongé dans le verre, nous découvrons des arômes caractéristiques d&#039;une bière blanche belge. Les levures travaillent et laissent derrière elles l', 2, 1, 33, 'PI_A_COLADA_WHEAT_33_cl.webp'),
-(5, 'NOIRAUDE', '5', 33, 'Connaissez-vous la Noiraude ? Cette fameuse bière de Lorraine va vous combler.\r\n\r\nLa Noiraude est une bière blanche pur malt ; elle est brassée avec du malt de blé et du malt d&#039;orge blond. Son brassage est effectué avec une méthode d&#039;infusion, qu', 1, 1, NULL, '644baffe72262.jpg');
+INSERT INTO `produits` (`id`, `nom`, `degres`, `stock`, `description`, `id_categories`, `id_origines`, `contenance`, `img`, `prix`) VALUES
+(1, 'Kwak Rouge', '8.00', 1, 'La Kwak Rouge de la brasserie belge Bosteels est une bière rafraîchissante à la cerise et aux amandes. Derrière sa robe rubis et sa mousse rose, il y a des arômes de fruits rouges, de cerise et de bonbon avec une pointe boisée.\r\n\r\nDélicatement amère, une fois en bouche, on y retrouve des saveurs fraîches et très fruitées de cerise, avec une puissance certaine qui se doit à ses 8% d&amp;amp;amp;#039;alcool.\r\n\r\nA déguster à une température de 8°C. ', 6, 3, 33, 'KwakRouge-6452222d2e624.webp', '2.45'),
+(2, 'ERDINGER DUNKEL', '5.60', 12, 'L&#039;Erdinger Weissbier Dunkel est une bière de blé brun foncé avec une mousse abondante de couleur crème de durée moyenne et des bulles fines et douces, avec 5,6% d&#039;alcool en volume, son arôme se distingue par ses notes de malt grillé, du café et du caramel, sa saveur épicée, une amertume modérée, pas sucrée mais pas simple non plus, une bonne bière avec une parfaite maîtrise de ses ingrédients.', 4, 2, 50, 'erdinger_dunkel_50cl.webp', '2.25'),
+(3, 'VAL DIEU GRAND CRU', '11.00', 1, 'Les bières brassées au sein même de l’Abbaye du Val-Dieu sont inspirées des recettes originales des moines de la communauté chrétienne installée ici depuis 1216. Les siècles d’expérience donnent aujourd’hui naissance à des bières sophistiquées et toujours ', 4, 3, 33, 'VAL_DIEU_GRAND_CRU_33_CL.webp', '3.00'),
+(4, 'PIÑA COLADA WHEAT', '5.00', 0, 'Sa robe blonde très pâle et trouble se couvre d&#039;une fine mousse blanche très fugace. Une fois le nez plongé dans le verre, nous découvrons des arômes caractéristiques d&#039;une bière blanche belge. Les levures travaillent et laissent derrière elles l', 2, 1, 33, 'PI_A_COLADA_WHEAT_33_cl.webp', '3.30'),
+(5, 'NOIRAUDE', '5.00', 33, 'Connaissez-vous la Noiraude ? Cette fameuse bière de Lorraine va vous combler.\r\n\r\nLa Noiraude est une bière blanche pur malt ; elle est brassée avec du malt de blé et du malt d&#039;orge blond. Son brassage est effectué avec une méthode d&#039;infusion, qu', 1, 1, 14, '644baffe72262.jpg', '2.00');
 
 -- --------------------------------------------------------
 
