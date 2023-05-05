@@ -71,12 +71,12 @@ if (isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] == 1) 
 } else {
 ?>
     <article class="container">
-        <article class="row justify-content-center mx-3" id="livre-d-or">
+        <article class="row justify-content-center mx-3" id="entry_container">
             <script>
                 const livre_d_or_recup = <?php echo json_encode($livre_d_or_recup); ?>;
             </script>
 
-            <ul class="col-8 align">
+            <ul class="col-8 align" id="livre-d-or">
                 <li>
                     <figure class='book' id="livre_d_or_pages">
 

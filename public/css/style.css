@@ -123,3 +123,9 @@ main {
 .inscription-link:hover {
     text-decoration: underline;
 }
+
+.img-resize {
+    width: 100px;  /* Changer la largeur selon vos besoins */
+    height: 100px; /* Changer la hauteur selon vos besoins */
+    object-fit: cover;
+}

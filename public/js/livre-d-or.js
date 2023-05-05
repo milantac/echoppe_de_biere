@@ -1,5 +1,32 @@
-// Initialise l'index courant à 0
-let currentIndex = 0;
+// Initialise l'index courant à 0 ou à la valeur enregistrée dans le localStorage
+let currentIndex = localStorage.getItem('currentIndex') ? parseInt(localStorage.getItem('currentIndex')) : 0;
+
+// Fonction pour sauvegarder la valeur de currentIndex dans le localStorage
+function saveCurrentIndex() {
+    localStorage.setItem('currentIndex', currentIndex);
+}
+
+// Mettez à jour les autres fonctions pour appeler saveCurrentIndex() après avoir modifié currentIndex
+
+// Fonction pour passer aux entrées suivantes
+function nextEntries() {
+    currentIndex += 2;
+    if (currentIndex >= livre_d_or_recup.length) {
+        currentIndex = 0;
+    }
+    displayEntry(currentIndex, currentIndex + 1);
+    saveCurrentIndex(); // Ajouter cet appel ici
+}
+
+// Fonction pour revenir aux entrées précédentes
+function prevEntries() {
+    currentIndex -= 2;
+    if (currentIndex < 0) {
+        currentIndex = livre_d_or_recup.length - 2;
+    }
+    displayEntry(currentIndex, currentIndex + 1);
+    saveCurrentIndex(); // Ajouter cet appel ici
+}
 
 // Fonction pour afficher les entrées du livre d'or aux index donnés
 function displayEntry(index1, index2) {
@@ -85,34 +112,14 @@ function displayEntry(index1, index2) {
     // Met à jour l'élément 'livre_d_or_pages' avec le nouveau contenu HTML
     const pagesElement = document.getElementById('livre_d_or_pages');
     pagesElement.innerHTML = entryHtml;
-}
 
-// Fonction pour passer aux entrées suivantes
-function nextEntries() {
-    currentIndex += 1;
-    if (currentIndex >= livre_d_or_recup.length) {
-        currentIndex = 0;
-    }
-    displayEntry(currentIndex, currentIndex + 1);
-}
+    // Ajoute les écouteurs d'événements pour les boutons "Suivant" et "Précédent" après avoir mis à jour l'élément 'livre_d_or_pages'
+    const nextButton = document.getElementById('nextButton');
+    nextButton.addEventListener('click', nextEntries);
 
-// Fonction pour revenir aux entrées précédentes
-function prevEntries() {
-    currentIndex -= 1;
-    if (currentIndex < 0) {
-        currentIndex = livre_d_or_recup.length - 2;
-    }
-    displayEntry(currentIndex, currentIndex + 1);
+    const prevButton = document.getElementById('prevButton');
+    prevButton.addEventListener('click', prevEntries);
 }
-
 
 // Affiche les entrées initiales (index 0 et 1)
 displayEntry(currentIndex, currentIndex + 1);
-
-// Sélectionne le bouton "Suivant" et ajoute un gestionnaire d'événements pour appeler la fonction nextEntries lors d'un clic
-const nextButton = document.getElementById('nextButton');
-nextButton.addEventListener('click', nextEntries);
-
-// Sélectionne le bouton "Précédent" et ajoute un gestionnaire d'événements pour appeler la fonction prevEntries lors d'un clic
-const prevButton = document.getElementById('prevButton');
-prevButton.addEventListener('click', prevEntries);

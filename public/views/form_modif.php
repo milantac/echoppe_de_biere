@@ -4,7 +4,6 @@ $test = require_once('..\models\function_Accueil_Json.php');
 <?php
 // Je vérifie que l'utilisateur est bien administrateur pour effectuer des modifications
 if (!isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] != 1) { // Si l'utilisateur n'est pas connecté en tant qu'administrateur
-    echo 'prout';
     header('Location: ../index.php?page=403'); // Rediriger vers une page d'erreur 404
     exit; // Arrêter l'exécution du script
 } else {
@@ -204,6 +203,14 @@ if (!isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] != 1)
                                         ?>
                                     </select>
                                 </div>
+                                <!-- Ajout d'une nouvelle catégorie: -->
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text bg-echoppe fw-bold">Nouvelle catégorie:</span>
+                                    <input type="text" name="new_category" id="new_category" class="form-control" placeholder="Nom de la nouvelle catégorie" aria-label="Nouvelle catégorie" aria-describedby="Nouvelle catégorie">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="button" id="add_new_category" class="btn btn-primary" value="Ajouter une nouvelle catégorie">
+                                </div>
                             </div>
                             <!-- Origine: -->
                             <div class="col-6">
@@ -219,6 +226,14 @@ if (!isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] != 1)
                                         }
                                         ?>
                                     </select>
+                                </div>
+                                <!-- Ajout d'une nouvelle origine: -->
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text bg-echoppe fw-bold">Nouvelle origine:</span>
+                                    <input type="text" name="new_origin" id="new_origin" class="form-control" placeholder="Nom de la nouvelle origine" aria-label="Nouvelle origine" aria-describedby="Nouvelle origine">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="button" id="add_new_origin" class="btn btn-primary" value="Ajouter une nouvelle origine">
                                 </div>
                             </div>
                             <!-- Image -->

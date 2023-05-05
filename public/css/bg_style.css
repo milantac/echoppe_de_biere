@@ -51,14 +51,16 @@
 .bg-biere {
     position: relative;
     background-image: 
-        url('../images/fond/fond-flottant-bulles1.png'), 
+        url('../images/fond/fond-flottant-bulles1.png'),
+        /* url('../images/fond/bull2.gif'), */
         -moz-linear-gradient( 180deg, rgba(255,255,255,1) 0%, 
             rgba(255,255,255,1) 9%, rgba(180,95,20,1) 13%, 
             rgba(187,98,23,1) 27%, rgba(255,154,37,1) 46%, 
             rgba(255,193,7,1) 100%
         );
     background-image:  
-        url('../images/fond/fond-flottant-bulles1.png'), 
+        url('../images/fond/fond-flottant-bulles1.png'),
+        /* url('../images/fond/bull2.gif'), */
         -webkit-linear-gradient(
             180deg, rgba(255,255,255,1) 0%, 
             rgba(255,255,255,1) 9%, 
@@ -69,6 +71,7 @@
         );
     background-image:  
         url('../images/fond/fond-flottant-bulles1.png'),
+        /* url('../images/fond/bull2.gif'), */
         linear-gradient(
             180deg, rgba(255,255,255,1) 0%, 
             rgba(255,255,255,1) 9%, 
