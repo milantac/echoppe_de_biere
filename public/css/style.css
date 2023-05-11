@@ -70,6 +70,14 @@ main {
     width: 100%;
 }
 .btn-echoppe { background-color: rgb(255, 244, 212); }
+.btn-echoppe:hover {
+    background-color: rgba(255, 235, 200, 0.802); 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn btn-echoppe:hover{
+    opacity: 1 !important;
+}
 
 #prevButton, #nextButton {
     border: rgb(0, 0, 0) solid 2px;
@@ -125,7 +133,7 @@ main {
 }
 
 .img-resize {
-    width: 100px;  /* Changer la largeur selon vos besoins */
-    height: 100px; /* Changer la hauteur selon vos besoins */
-    object-fit: cover;
+    width: 200px;       /*  Changer la largeur selon vos besoins  */
+    height: 200px;      /*  Changer la hauteur selon vos besoins  */
+    object-fit: contain;  /*  Pour maintenir l'aspect ratio  */
 }

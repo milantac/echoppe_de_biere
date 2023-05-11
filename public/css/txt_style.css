@@ -78,3 +78,19 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+@font-face {
+    font-family: 'Kleymissky';
+    src: url('../font/Kleymissky.eot');
+    src: url('../font/Kleymissky.eot?#iefix') format('embedded-opentype'),
+        url('../font/Kleymissky.woff2') format('woff2'),
+        url('../font/Kleymissky.woff') format('woff'),
+        url('../font/Kleymissky.ttf') format('truetype'),
+        url('../font/Kleymissky.svg#Kleymissky') format('svg');
+    font-weight: normal;
+    font-size: 12em;
+    font-style: italic;
+}
+
+.txt-commentaire{
+    font-family: 'Kleymissky';
+}

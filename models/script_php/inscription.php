@@ -24,26 +24,26 @@ if (isset($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['telephone'],
         $type_utilisateur = 2;
 
         // Préparation de la requête
-        $sql = "INSERT INTO utilisateur (nom_utilisateur, prenom_utilisateur, mail_utilisateur, tel_utilisateur, numero_adresse, voie_adresse, code_postal, ville_adresse, mdp_utilisateur, type_utilisateur)
-                VALUES (:nom_utilisateur, :prenom_utilisateur, :mail_utilisateur, :tel_utilisateur, :numero_adresse, :voie_adresse, :code_postal, :ville_adresse, :mdp_utilisateur, :type_utilisateur)";
+        $sql = "INSERT INTO users (nom, prenom, login, tel, numero_adresse, voie_adresse, code_postal, ville_adresse, mdp, niveau_droits)
+                VALUES (:nom, :prenom, :mail, :tel, :numero_adresse, :voie_adresse, :code_postal, :ville_adresse, :mdp, :niveau_droits)";
         // Préparation de la requête
         $stmt = $bdd->prepare($sql);
-        if ($stmt->execute(array(   ':nom_utilisateur'=> $nom, 
-        ':prenom_utilisateur'=> $prenom, 
-        ':mail_utilisateur'=> $email, 
-        ':tel_utilisateur'=> $telephone, 
+        if ($stmt->execute(array(   ':nom'=> $nom, 
+        ':prenom'=> $prenom, 
+        ':mail'=> $email, 
+        ':tel'=> $telephone, 
         ':numero_adresse'=> $numero_adresse, 
         ':voie_adresse'=> $voie_adresse, 
         ':code_postal'=> $cp_adresse, 
         ':ville_adresse'=> $ville_adresse, 
-        ':mdp_utilisateur'=> $motdepasse_crypte, 
-        ':type_utilisateur'=> $type_utilisateur))) {
+        ':mdp'=> $motdepasse_crypte, 
+        ':niveau_droits'=> $type_utilisateur))) {
             // Redirection vers la page de succès (à personnaliser)
-            header("Location:../../public/index.php?page=accueil&msg=success");
+            header("Location:../../public/index.php?page=login&msg=success");
             exit;
         } else {
             // Redirection vers la page d'erreur (à personnaliser)
-            header("Location:../../public/index.php?page=accueil&msg=error");
+            header("Location:../../public/index.php?page=form_inscription&msg=error");
             exit;
         }
     } else {

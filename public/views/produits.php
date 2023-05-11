@@ -12,10 +12,10 @@
 </div>
 <?php
 // Récupération des produits pour les cartes de produits
-$sqlCards = "SELECT produits.id, produits.nom AS nom_biere, produits.img AS photo, produits.degres, produits.contenance, produits.prix, produits.description, produits.stock, categories.nom AS couleur, origines.nom AS pays
-        FROM produits
-        JOIN categories ON produits.id_categories = categories.id
-        JOIN origines ON produits.id_origines = origines.id";
+$sqlCards = " SELECT produits.id, produits.nom AS nom_biere, produits.img AS photo, produits.degres, produits.contenance, produits.prix, produits.description, produits.stock, categories.nom AS couleur, origines.nom AS pays
+              FROM produits
+              JOIN categories ON produits.id_categories = categories.id
+              JOIN origines ON produits.id_origines = origines.id";
 $stmtCards = $bdd->prepare($sqlCards);
 $stmtCards->execute();
 // Vérification si des résultats ont été trouvés
@@ -77,46 +77,52 @@ if ($stmtCards->rowCount() > 0) {
     <div class="container">
       <div class="row mb-3">
         <!-- Barre latérale avec champ de recherche et filtres (col-3) -->
-          <div class="col-3 bg-echoppe">
-            <h3>Recherche de produits</h3>
+        <section class="col-2 bg-echoppe">
+          <div class="row">
+            <h3 class="col-12">Recherche de produits</h3>
             <input type="text" class="search-input" id="searchInput" placeholder="Rechercher un produit..." onkeyup="filterProducts()">
+          </div>
+          <?php
+          // Récupérer la liste des types de bière (catégories)
+          $stmt = $bdd->prepare('SELECT DISTINCT nom FROM categories ORDER BY nom ASC');
+          $stmt->execute();
+          $types = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-            <?php
-            // Récupérer la liste des types de bière (catégories)
-            $stmt = $bdd->prepare('SELECT DISTINCT nom FROM categories ORDER BY nom ASC');
-            $stmt->execute();
-            $types = $stmt->fetchAll(PDO::FETCH_COLUMN);
+          // Récupérer la liste des origines
+          $stmt = $bdd->prepare('SELECT DISTINCT nom FROM origines ORDER BY nom ASC');
+          $stmt->execute();
+          $origins = $stmt->fetchAll(PDO::FETCH_COLUMN);
+          ?>
 
-            // Récupérer la liste des origines
-            $stmt = $bdd->prepare('SELECT DISTINCT nom FROM origines ORDER BY nom ASC');
-            $stmt->execute();
-            $origins = $stmt->fetchAll(PDO::FETCH_COLUMN);
-            ?>
-
-            <!-- Filtres par type -->
-            <h4>Type de bière</h4>
+          <!-- Filtres par type -->
+          <div class="row">
+            <h4 class="col-12">Type de bière</h4>
             <?php foreach ($types as $type) : ?>
-              <div class="form-check">
+              <div class="form-check col-6">
                 <input class="form-check-input" type="checkbox" value="<?= htmlspecialchars($type) ?>" id="<?= htmlspecialchars($type) ?>" onchange="filterProducts()">
                 <label class="form-check-label" for="<?= htmlspecialchars($type) ?>">
                   <?= htmlspecialchars($type) ?>
                 </label>
               </div>
             <?php endforeach; ?>
+          </div>
 
-            <!-- Filtres par origine -->
-            <h4>Origine</h4>
+          <!-- Filtres par origine -->
+          <div class="row">
+            <h4 class="col-12">Origine</h4>
             <?php foreach ($origins as $origin) : ?>
-              <div class="form-check">
+              <div class="form-check col-6">
                 <input class="form-check-input" type="checkbox" value="<?= htmlspecialchars($origin) ?>" id="<?= htmlspecialchars($origin) ?>" onchange="filterProducts()">
                 <label class="form-check-label" for="<?= htmlspecialchars($origin) ?>">
                   <?= htmlspecialchars($origin) ?>
                 </label>
               </div>
             <?php endforeach; ?>
+          </div>
 
-            <!-- Filtre de prix -->
-            <h4>Prix (€)</h4>
+          <!-- Filtre de prix -->
+          <div class="row">
+            <h4 class="col-12">Prix (€)</h4>
             <div class="d-flex justify-content-between">
               <span>0</span>
               <input type="range" class="form-range" min="0" max="50" step="1" id="priceRange" oninput="updatePriceLabel()" onchange="filterProducts()">
@@ -124,30 +130,32 @@ if ($stmtCards->rowCount() > 0) {
             </div>
             <span id="priceLabel">0 - 50€</span>
           </div>
+        </section>
 
-          <!-- Cartes de produits (col-9) -->
-          <div class="col-9">
+        <!-- Cartes de produits (col-9) -->
+        <section class="col-10">
+          <div class="container-fluid">
             <div class="row">
               <?php
               // Affichage sous forme de cards
               while ($row = $stmtCards->fetch(PDO::FETCH_ASSOC)) {
               ?>
                 <!-- Création d'une carte pour chaque bière -->
-                <div class="card mx-1 mb-4 cadre_noir col-3">
-                  <div class="row g-0">
+                <div class="card cadre_noir col-3 my-1">
+                  <div class="row my-2">
                     <!-- Affichage de l'image de la bière -->
-                    <div class="col-md-4 my-auto">
-                      <img src="./images/produits/<?= $row["photo"] ?>" class="img-fluid rounded-start w-100" alt="<?= $row["photo"] ?>">
+                    <div class="col-12 d-flex justify-content-center align-items-center">
+                      <img src="./images/produits/<?= $row["photo"] ?>" class="img-fluid rounded-start img-resize mx-auto" alt="<?= $row["photo"] ?>">
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-12">
                       <div class="card-header">
                         <!-- Affichage du titre et de la quantité de la bière -->
-                        <h5 class="card-title"><?= $row["nom_biere"] ?></h5>
+                        <h5 class="card-title text-center"><?= $row["nom_biere"] ?></h5>
                       </div>
                       <div class="card-body">
-                        <!-- Affichage des 200 premiers caractères de la description et du contenu entier au survol -->
+                        <!-- Affichage des 100 premiers caractères de la description et du contenu entier au survol -->
                         <!-- <p class="card-text description" title="description" data-bs-toggle="modal"><?= $row["description"] ?></p> -->
-                        <p class="card-text"><?= substr($row["description"], 0, 200) ?><?php if (strlen($row["description"]) > 200) {
+                        <p class="card-text"><?= substr($row["description"], 0, 100) ?><?php if (strlen($row["description"]) > 100) {
                                                                                           echo '...';
                                                                                         } ?>
                           <br>
@@ -163,9 +171,9 @@ if ($stmtCards->rowCount() > 0) {
                         </p>
 
                       </div>
-                      <div class="card-header">
+                      <div class="card-header d-flex justify-content-center align-items-center">
                         <!-- Bouton pour ajouter la bière au panier -->
-                        <a href="#" class="btn btn-primary mb-2">ajouter au panier</a>
+                        <a href="#" class="btn btn-primary my-2 mx-auto ">ajouter au panier</a>
                       </div>
                     </div>
                   </div>
@@ -193,6 +201,7 @@ if ($stmtCards->rowCount() > 0) {
               ?>
             </div>
           </div>
+        </section>
       </div>
     </div>
 <?php

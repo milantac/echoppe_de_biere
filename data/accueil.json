@@ -1,17 +1,39 @@
 {
     "accueil": {
-        "msg_accueil": "Bienvenu a tous  et bienvenue",
+        "msg_accueil": "Bienvenue à tous  et bienvenue !!! 1234",
         "paragraphe_un": "Bienvenue sur le site internet de l'Échoppe de Bière de Joeuf, votre destination incontournable pour les amateurs de bière dans la région de Lorraine. Situé au 44 rue de Franchepré, 54240 à Joeuf, notre établissement est un véritable paradis pour les connaisseurs de bières artisanales, les amateurs de saveurs uniques et les curieux à la recherche de nouvelles expériences gustatives.",
         "paragraphe_deux": "Notre Échoppe de bière offre deux options pour profiter de notre large sélection de bières : la vente de bières à emporter dans notre cave à bières et la dégustation sur place dans notre bar à bières. Nous sommes fiers de proposer une grande variété de bières artisanales, en provenance des brasseries locales et internationales les plus réputées. Notre équipe de passionnés de bières est là pour vous conseiller et vous aider à trouver la bière qui répondra à vos attentes, que vous cherchiez une bière blonde légère, une IPA houblonnée ou une bière noire robuste.",
         "paragraphe_trois": "Nous sommes également ravis de proposer des événements réguliers tels que des soirées à thème, des dégustations de bières et des rencontres avec des brasseurs locaux. Notre bar à bières est l'endroit idéal pour se détendre et socialiser, tout en découvrant de nouvelles saveurs et en partageant sa passion pour la bière.",
-        "paragraphe_quatre": "Nous sommes impatients de vous accueillir à l'Échoppe de Bière de Joeuf, que vous soyez un habitué ou un nouveau venu. Venez découvrir notre sélection de bières artisanales et notre ambiance conviviale, et laissez-nous vous faire vivre une expérience de dégustation de bières inoubliable."
+        "paragraphe_quatre": "Nous sommes impatients de vous accueillir à l'Échoppe de Bière de Joeuf, que vous soyez un habitué ou un nouveau venu. Venez découvrir notre sélection de bières artisanales et notre ambiance conviviale, et laissez-nous vous faire vivre une expérience de dégustation de bières inoubliable.",
+        "carrousel": [
+            {
+                "id": 1,
+                "src": ".\/images\/carrousel_accueil\/carrousel-devanture.jpg",
+                "alt": "devanture"
+            },
+            {
+                "id": 2,
+                "src": ".\/images\/carrousel_accueil\/carrousel-shop.jpg",
+                "alt": "shop"
+            },
+            {
+                "id": 3,
+                "src": ".\/images\/carrousel_accueil\/carrousel-biere.jpg",
+                "alt": "biere"
+            },
+            {
+                "id": 4,
+                "src": ".\/images\/carrousel_accueil\/carrousel-bar.jpg",
+                "alt": "bar"
+            }
+        ]
     },
     "horaires": {
         "1": {
             "id_horaire_ouverture": 1,
             "jour": "Lundi",
             "horaire_matin": "Fermé",
-            "horaire_apres_midi": "fermer"
+            "horaire_apres_midi": "Fermé"
         },
         "2": {
             "id_horaire_ouverture": 2,
@@ -40,8 +62,8 @@
         "6": {
             "id_horaire_ouverture": 6,
             "jour": "Samedi",
-            "horaire_matin": "Fermé",
-            "horaire_apres_midi": "Fermé"
+            "horaire_matin": "09:00 - 12:00",
+            "horaire_apres_midi": "12:00 - 23:00"
         },
         "7": {
             "id_horaire_ouverture": 7,

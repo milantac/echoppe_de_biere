@@ -3,6 +3,7 @@ session_start(); // Initialisation des variables de session
 
 // Inclure le fichier de connexion à la base de données
 include('./connexion-BDD.php');
+include('../utils.php');
 
 if (isset($_POST['mail'], $_POST['mdp'])) {
     $mail = htmlspecialchars(trim($_POST['mail']));
@@ -22,6 +23,7 @@ if (isset($_POST['mail'], $_POST['mdp'])) {
                 $_SESSION['nom_utilisateur'] = $user['nom']; // Enregistrement du nom de l'utilisateur en variable de session
                 $_SESSION['prenom_utilisateur'] = $user['prenom']; // Enregistrement du prénom de l'utilisateur en variable de session
                 $_SESSION['type_utilisateur'] = $user['niveau_droits']; // Enregistrement du type d'utilisateur en variable de session
+                generate_csrf_token(); 
                 header("Location:../../public/index.php?page=accueil"); // Redirection vers la page d'accueil
                 exit;
             } else {

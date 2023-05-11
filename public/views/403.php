@@ -1,3 +1,4 @@
+<?= $_GET['token']; ?>
 <!--Page d'erreur 403-->
 <article class="row justify-content-center py-3" title="Page interdite">
     <div class="card my-5 cadre_noir alert alert-danger

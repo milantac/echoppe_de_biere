@@ -22,10 +22,9 @@
                     
                 </a>
 
-                <ul class=" nav 
-                            col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 col-xxl-5  my-auto justify-content-end">
-                    <li class="nav-item"><a href="#" class="nav-link px-2 text-decoration-none txt-Blanc">Mention Légal</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link px-2 text-decoration-none txt-Blanc">Protection de données</a></li>
+                <ul class=" nav col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 col-xxl-5  my-auto justify-content-end">
+                    <li class="nav-item"><a href="#" class="nav-link px-2 text-decoration-none txt-Blanc" data-toggle="modal" data-target="#legalModal">Mentions Légales</a></p></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 text-decoration-none txt-Blanc" data-toggle="modal" data-target="#dataProtectionModal">Protection de données</a></li>
                     <li class="nav-item"><a href="#" class="nav-link px-2 text-decoration-none txt-Blanc">Paramètres des cookies</a></li>
                 </ul>
             </section>

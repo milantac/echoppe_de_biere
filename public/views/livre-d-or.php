@@ -4,7 +4,8 @@ $stmt = $bdd->prepare(
     "SELECT `id`, `nom`, `prenom`, `email`, `date`, `commentaire`, `validation`
      FROM `livre_or_commentaires`
      WHERE `validation` = 1 
-     ORDER BY `date` DESC"
+     ORDER BY `date` DESC
+    "
 );
 $stmt->execute();
 $livre_d_or_recup = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -13,76 +14,133 @@ $livre_d_or_recup = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <?php
 if (isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] == 1) {
+    if (isset($_GET['token']) && isset($_SESSION['csrf_token']) && $_GET['token'] == $_SESSION['csrf_token']) {
 ?>
-    <article class="container my-5 bg-light">
-        <form action="../models/script_php/ajout.php?action=valid_com" method="post" class="row p-3 m-3 justify-content-center cadre_noir">
-            <div class="table-responsive col-12 mt-3 mb-2">
-                <table class="table table-bordered table-striped">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Nom</th>
-                            <th>Prénom</th>
-                            <th>Email</th>
-                            <th>Date</th>
-                            <th>Commentaire</th>
-                            <th>Validation</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-echoppe">
-                        <?php
-                        // Récupération des données depuis la table livre_d_or
-                        $stmt_admin = $bdd->prepare(
-                            "   SELECT `id`, `nom`, `prenom`, `email`, `date`, `commentaire`, `validation`
-                        FROM `livre_or_commentaires`
-                        ORDER BY `date` DESC
-                    "
-                        );
-                        $stmt_admin->execute();
-                        $livre_d_or_admin = $stmt_admin->fetchAll(PDO::FETCH_ASSOC);
-
-                        // Affichage des résultats
-                        foreach ($livre_d_or_admin as $resultat) {
-                        ?>
+        <!--    FORMULAIRE ADMINISTRATEUR DE VALIDATION DES COMMENTIARES    -->
+        <article class="container my-5 bg-light">
+            <form action="../models/script_php/ajout.php?action=valid_com&token=<?= $_SESSION['csrf_token']; ?>" method="post" class="row p-3 m-3 justify-content-center cadre_noir">
+                <div class="table-responsive col-12 mt-3 mb-2">
+                    <table class="table table-bordered table-striped">
+                        <thead class="table-dark">
                             <tr>
-                                <td><?= htmlspecialchars($resultat['nom']) ?></td>
-                                <td><?= htmlspecialchars($resultat['prenom']) ?></td>
-                                <td><?= htmlspecialchars($resultat['email']) ?></td>
-                                <td><?= date('d/m/Y H:i', strtotime($resultat['date'])) ?></td>
-                                <td class="form-floating">
-                                    <textarea class="form-control" name="commentaire[<?= $resultat['id'] ?>]" placeholder="Laissez un commentaire ici" id="commentaire_<?= $resultat['id'] ?>" rows="10" cols="100"><?= htmlspecialchars($resultat['commentaire']) ?></textarea>
-                                    <label for="commentaire_<?= $resultat['id'] ?>">Commentaire</label>
-                                </td>
-                                <td>
-                                    <label class="switch">
-                                        <input type="checkbox" name="validation[<?= $resultat['id'] ?>]" value="<?= $resultat['id'] ?>" <?= $resultat['validation'] == 1 ? 'checked' : '' ?> />
-                                        <span></span>
-                                    </label>
-                                </td>
-                                <input type="hidden" name="livre_d_or[<?= $resultat['id'] ?>][id]" value="<?= $resultat['id'] ?>" />
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Email</th>
+                                <th>Date</th>
+                                <th>Commentaire</th>
+                                <th>Validation</th>
+                                <th hidden>Id</th>
                             </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            </div>
-            <button type="submit" class="btn btn-primary col-2 mb-4">Envoyer</button>
-        </form>
-    </article>
-<?php
+                        </thead>
+                        <tbody class="bg-echoppe">
+                            <?php
+                            // Récupération des données depuis la table livre_d_or
+                            $stmt_admin = $bdd->prepare(
+                                "   SELECT `id`, `nom`, `prenom`, `email`, `date`, `commentaire`, `validation`
+                                    FROM `livre_or_commentaires`
+                                    ORDER BY `date` DESC
+                                "
+                            );
+                            $stmt_admin->execute();
+                            $livre_d_or_admin = $stmt_admin->fetchAll(PDO::FETCH_ASSOC);
+
+                            // Affichage des résultats
+                            foreach ($livre_d_or_admin as $resultat) {
+                            ?>
+                                <tr>
+
+                                    <td><?php echo htmlspecialchars(trim($resultat['nom'])) ?></td>
+                                    <td><?php echo htmlspecialchars(trim($resultat['prenom'])) ?></td>
+                                    <td><?php echo htmlspecialchars(trim($resultat['email'])) ?></td>
+                                    <td><?php echo date('d/m/Y H:i', strtotime($resultat['date'])) ?></td>
+                                    <td class="form-floating">
+                                        <textarea id="commentaire_<?php echo $resultat['id'] ?>" class="form-control" name="commentaire[<?php echo $resultat['id'] ?>]" placeholder="Laissez un commentaire ici" rows="10" cols="100"><?php echo htmlspecialchars(trim($resultat['commentaire'])) ?></textarea>
+                                        <label for="commentaire_<?php echo $resultat['id'] ?>">Commentaire</label>
+                                    </td>
+                                    <td>
+                                        <label class="switch" for="validation_<?php echo $resultat['id'] ?>">
+                                            <input type="checkbox" id="validation_<?php echo $resultat['id'] ?>" name="validation[<?php echo $resultat['id'] ?>]" value="<?php echo $resultat['id'] ?>" <?php echo $resultat['validation'] == 1 ? 'checked' : '' ?> />
+                                            <span></span>
+                                        </label>
+                                    </td>
+                                    <td hidden><input id="livre_d_or[<?php echo $resultat['id'] ?>][id]" name="livre_d_or[<?php echo $resultat['id'] ?>][id]" value="<?php echo $resultat['id'] ?>" hidden /></td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+                <button type="submit" class="btn btn-primary col-2 mb-4">Envoyer</button>
+            </form>
+        </article>
+    <?php
+    } else {
+        header('Location: ./index.php?page=403');
+        exit;
+    }
 } else {
-?>
-    <article class="container">
+    ?>
+    <section class="container">
         <article class="row justify-content-center mx-3" id="entry_container">
             <script>
                 const livre_d_or_recup = <?php echo json_encode($livre_d_or_recup); ?>;
             </script>
 
-            <ul class="col-8 align" id="livre-d-or">
-                <li>
-                    <figure class='book' id="livre_d_or_pages">
+            <!-- Affichage de l'élément unique si le tableau ne contient qu'un seul élément -->
+            <?php
+            if (count($livre_d_or_recup) === 1) { ?>
+                <ul class="col-8 align" id="livre-d-or">
+                    <li>
+                        <figure class='book' id="livre_d_or_pages">
+                            <ul class='hardcover_front'>
+                                <li>
+                                    <div class="coverDesign dark">
+                                        <img src="../public/images/logo/Logo_Vectoriel_Or.svg" alt="Logo Echoppe de bière" class="img-fluid mt-3" />
+                                        <h1 class="fw-bold my-2">LIVRE D'OR</h1>
+                                        <p>l'échoppe de bière</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="container mt-3">
+                                        <div class="row my-2">
+                                            <br>
+                                        </div>
+                                        <div class="row m-4">
+                                            <br>
+                                            <p class="txt-commentaire text-start fw-bold fs-2 my-2">
+                                                <?php echo $livre_d_or_recup[0]['commentaire']; ?>
+                                            </p>
+                                        </div>
+                                        <div class="row my-4 me-2">
+                                            <p class="mt-4 text-end fs-4 me-5">Commentaire de:</p>
+                                            <hr>
+                                            <p class="mb-4 txt-commentaire text-end fw-bold fs-1 me-5">
+                                                <?php echo $livre_d_or_recup[0]['nom'] . '  ' . $livre_d_or_recup[0]['prenom']; ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class='hardcover_back'>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                            <ul class='book_spine'>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                        </figure>
+                    </li>
+                </ul>
+            <?php } else { ?>
+                <!-- Affichage normal si le tableau contient plus d'un élément -->
+                <ul class="col-8 align" id="livre-d-or">
+                    <li>
+                        <figure class='book' id="livre_d_or_pages">
 
-                    </figure>
-                </li>
-            </ul>
+                        </figure>
+                    </li>
+                </ul>
+            <?php } ?>
         </article>
 
         <!-- Formulaire de livre d'or -->
@@ -145,5 +203,6 @@ if (isset($_SESSION['type_utilisateur']) && $_SESSION['type_utilisateur'] == 1) 
                 </fieldset>
             </form>
         </article>
+    </section>
     <?php
 }

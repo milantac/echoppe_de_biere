@@ -6,7 +6,3 @@ function generate_csrf_token() {
     }
     return $_SESSION['csrf_token'];
 }
-
-function verify_csrf_token($token) {
-    return isset($_SESSION['csrf_token']) && $_SESSION['csrf_token'] === $token;
-}

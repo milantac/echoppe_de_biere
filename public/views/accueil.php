@@ -8,7 +8,7 @@
         <button class="carousel-control-prev col-1" type="button" data-bs-target="#carouselAcceuil" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
-        </button>p
+        </button>
         <!-- Affichage du carrousel -->
         <div class="carousel-inner col-8 mx-auto">
             <div class="carousel-item active" data-bs-interval="10000">

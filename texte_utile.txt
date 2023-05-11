@@ -36,3 +36,17 @@ Paramètres des cookies
 Nous utilisons des cookies pour améliorer votre expérience sur notre site web et pour analyser notre trafic. Les cookies sont de petits fichiers texte stockés sur votre ordinateur ou votre appareil mobile lorsque vous visitez un site web.
 
 Vous pouvez contrôler et/ou supprimer les cookies comme vous le souhaitez. Pour en savoir plus sur la gestion des cookies, visitez www.aboutcookies.org. Si vous choisissez de désactiver les cookies, certaines fonctionnalités de notre site web pourraient ne pas fonctionner correctement.
+
+
+
+
+
+
+col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12
+
+if(isset($_GET['token']) && isset($_SESSION['csrf_token']) && $_GET['token'] == $_SESSION['csrf_token']){
+
+}else{
+    header('Location: ./index.php?page=403');
+    exit;
+}
